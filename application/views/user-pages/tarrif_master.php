@@ -1,10 +1,10 @@
 <?php
 if($this->session->userdata('post')==null){
 $title1='';
-$trip_model_id='';
-$vehicle_make_id='';
-$vehicle_ac_type_id='';
-$vehicle_type_id='';
+//$trip_model_id='';
+//$vehicle_make_id='';
+//$vehicle_ac_type_id='';
+//$vehicle_type_id='';
 $minimum_kilometers='';
 $minimum_hours='';
 }
@@ -12,10 +12,10 @@ else
 {
 $data=$this->session->userdata('post');
 $title1=$data['title'];
-$trip_model_id=$data['trip_model_id'];
-$vehicle_type_id=$data['vehicle_type_id'];
-$vehicle_make_id=$data['vehicle_make_id'];
-$vehicle_ac_type_id=$data['vehicle_ac_type_id'];
+//$trip_model_id=$data['trip_model_id'];
+//$vehicle_type_id=$data['vehicle_type_id'];
+//$vehicle_make_id=$data['vehicle_make_id'];
+//$vehicle_ac_type_id=$data['vehicle_ac_type_id'];
 $minimum_kilometers=$data['minimum_kilometers'];
 $minimum_hours=$data['minimum_hours'];
 $this->session->set_userdata('post','');
@@ -42,7 +42,7 @@ $this->session->set_userdata('post','');
 <table>
 <tr>
 <td><?php echo form_open(base_url()."organization/front-desk/tarrif-masters"); 
-echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>$title1)); ?>
+echo form_input(array('name'=>'search_title','class'=>'form-control','id'=>'title1','placeholder'=>'Title','value'=>'')); ?>
 </td>
 <!--<td><?php $class="form-control";
 		$msg="Trip Model";
