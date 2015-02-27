@@ -53,7 +53,7 @@ class Tarrif extends CI_Controller {
 	 $this->form_validation->set_rules('min_kilo','Minimum Kilometers','trim|required|xss_clean|numeric');
 	 $this->form_validation->set_rules('min_hours','Minimum Hours','trim|required|xss_clean|numeric');
 	
-		if($this->form_validation->run()==False || $err==False){echo "err";exit;
+		if($this->form_validation->run()==False || $err==False){
 		 $this->session->set_userdata('post',$data);
 		redirect(base_url().'organization/front-desk/tarrif-masters',$data);
 		}
