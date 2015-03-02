@@ -1746,7 +1746,9 @@ function diffDateTime(startDT, endDT){
   return oDiff;
 }
 
-$('#pickuptimepicker,#droptimepicker,#pickupdatepicker,#dropdatepicker').on('blur',function(){
+
+
+$('#pickuptimepicker,#droptimepicker,#pickupdatepicker,#dropdatepicker').on('blur',function(){ 
 var pickupdatepicker = $('#pickupdatepicker').val();
 var dropdatepicker = $('#dropdatepicker').val();
 var pickuptimepicker = $('#pickuptimepicker').val();
@@ -1756,6 +1758,16 @@ pickupdatepicker=pickupdatepicker.split('-');
 dropdatepicker=dropdatepicker.split('-');
 var new_pickupdatetime = pickupdatepicker[1]+'/'+pickupdatepicker[0]+'/'+pickupdatepicker[2]+' '+pickuptimepicker+':00';
 var new_dropdatetime = dropdatepicker[1]+'/'+dropdatepicker[0]+'/'+dropdatepicker[2]+' '+droptimepicker+':00';
+// start time -end time check
+var start_time=new Date(pickupdatepicker[2]+'/'+pickupdatepicker[1]+'/'+pickupdatepicker[0]+' '+pickuptimepicker+':00');
+var end_time=new Date(dropdatepicker[2]+'/'+dropdatepicker[1]+'/'+dropdatepicker[0]+' '+droptimepicker+':00');
+if( start_time < end_time){
+
+}
+else{
+alert("Correct drop time");
+}
+
 var objDiff = diffDateTime(new_pickupdatetime, new_dropdatetime);
 var dtdiff = objDiff.days+ ' days, '+ objDiff.hours+ ' hours, '+ objDiff.minutes+ ' minutes, '+ objDiff.seconds+ ' seconds';
 var total_hours = 'Total Hours: '+ objDiff.totalhours;
