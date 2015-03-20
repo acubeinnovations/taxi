@@ -55,9 +55,9 @@ class User extends CI_Controller {
 		$param4=$this->uri->segment(6);
 
 		//unset search session condition before navigation
-		if($param1!='trips'){
+		/*if($param1!='trips'){
 		$this->mysession->delete('condition');
-		}
+		}*/
 
         if($this->session_check()==true) {
 		if($param1==''){
