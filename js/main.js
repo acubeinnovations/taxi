@@ -1758,6 +1758,7 @@ pickupdatepicker=pickupdatepicker.split('-');
 dropdatepicker=dropdatepicker.split('-');
 var new_pickupdatetime = pickupdatepicker[1]+'/'+pickupdatepicker[0]+'/'+pickupdatepicker[2]+' '+pickuptimepicker+':00';
 var new_dropdatetime = dropdatepicker[1]+'/'+dropdatepicker[0]+'/'+dropdatepicker[2]+' '+droptimepicker+':00';
+
 // start time -end time check
 var start_time=new Date(pickupdatepicker[2]+'/'+pickupdatepicker[1]+'/'+pickupdatepicker[0]+' '+pickuptimepicker+':00');
 var end_time=new Date(dropdatepicker[2]+'/'+dropdatepicker[1]+'/'+dropdatepicker[0]+' '+droptimepicker+':00');
