@@ -1361,7 +1361,8 @@ var pickupdatetime = pickupdate+' '+pickuptime+':00';
 var dropdatetime   = dropdate+' '+droptime+':00';
 $('.display-me').css('display','block');
 id="#tarrif";
-generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
+//INTELLIGENCE PORTION
+//generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id);
 generateTariffs(vehicle_model,vehicle_ac_type,tarif_id,id);
 
 }else if(vehicle_model!=-1 && vehicle_ac_type!=-1){
@@ -1373,165 +1374,8 @@ generateTariffs(vehicle_model,vehicle_ac_type,tarif_id,id);
 
 }
 
-/*for cnc------------------
 
-function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){//alert(available_vehicle_id);
-	//alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
-	var available_vehicle_id=available_vehicle_id;
-	
-	var selected="selected=selected";
-	var vehicle_makes=$('.vehicle-makes').html().split(',');
-	$('#available_vehicle option').remove();
-	$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
-	if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){
-		$.post(base_url+"/trip-booking/getVehicle",
-		  {
-			id:available_vehicle_id
-		  },function(data1){data1=jQuery.parseJSON(data1);
-			selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+data1.data[0].registration_number+"</option>";
-			$('#available_vehicle').append(selected_option);
-			});
-	}
-	 $.post(base_url+"/trip-booking/getAvailableVehicles",
-		  {
-			vehicle_type:vehicle_type,
-			vehicle_ac_type:vehicle_ac_type,
-			vehicle_make:vehicle_make,
-			vehicle_model:vehicle_model,
-			pickupdatetime:pickupdatetime,
-			dropdatetime:dropdatetime
-		  },function(data){
-			if(data!='false'){
-			data=jQuery.parseJSON(data);
-			for(var i=0;i<data.data.length;i++){
-								
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' ></option>").text(data.data[i].registration_number));
-				
-			}
-		
-			}else{
-					if(available_vehicle_id=='' || available_vehicle_id==-1 ){
-					$('#available_vehicle option').remove();
-					$('#available_vehicle').append($("<option value='-1'></option>").text('--Select Vehicle--'));
-					alert('No Available Vehicles');
-					}
-			}
-			$('.display-me').css('display','none');
-		   });
-
-}
-
-
-function generateTariffs(vehicle_ac_type,vehicle_model,tarif_id=''){
-	var tarif_id=tarif_id;
-	 $.post(base_url+"/tarrif/tariffSelecter",
-		  {
-			
-			vehicle_ac_type:vehicle_ac_type,
-			vehicle_model:vehicle_model
-		  },function(data){
-			if(data!='false'){
-			data=jQuery.parseJSON(data);
-			$('#tarrif option').remove();
-			 $('#tarrif').append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
-			i=0;//alert(data.data.length);
-			for(var i=0;i<data.data.length;i++){
-			if(tarif_id==data.data[i].id){
-			var selected="selected=selected";
-			}else{
-			var selected="";
-			}
-			  $('#tarrif').append($("<option rate='"+data.data[i].rate+"' additional_kilometer_rate='"+data.data[i].additional_kilometer_rate+"' minimum_kilometers='"+data.data[i].minimum_kilometers+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").attr("value",data.data[i].id).text(data.data[i].title));
-
-			
-				
-			}
-			$('.display-me').css('display','none');
-			if(tarif_id!=''){
-
-			//SetRoughEstimate();
-			}
-			}else{
-			 $('#tarrif option').remove();
-			 $('#tarrif').append($("<option rate='-1' additional_kilometer_rate='-1' minimum_kilometers='-1'></option>").attr("value",'-1').text('--Select Tariffs--'));
-				$('.display-me').css('display','none');
-			}
-			
-		  });
-		
-
-}	
-*/
-
-/*
-function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
-	//alert(vehicle_type);alert(vehicle_ac_type);alert(pickupdatetime);alert(dropdatetime);
-	var available_vehicle_id=available_vehicle_id;
-	 $.post(base_url+"/trip-booking/getAvailableVehicles",
-		  {
-			vehicle_type:vehicle_type,
-			vehicle_make:vehicle_make,
-			vehicle_model:vehicle_model,
-			vehicle_ac_type:vehicle_ac_type,
-			pickupdatetime:pickupdatetime,
-			dropdatetime:dropdatetime
-		  },function(data){ 
-			data=jQuery.parseJSON(data);
-			$('#available_vehicle option').remove();
-			$('#available_vehicle').append($("<option value='' selected='selected'></option>").text('--Select Vehicle--'));
-			for(var i=0;i<data.data.length;i++){
-				if(available_vehicle_id==data.data[i].vehicle_id){
-				var selected="selected=selected";
-				}else{
-				var selected="";
-				}
-				//alert(data.data[i].registration_number);
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number));
-				//i=Number(i)+1;
-			}
-		
-			
-			if(Trim(available_vehicle_id)!='' && Trim(available_vehicle_id)!=-1 ){
-			$.post(base_url+"/trip-booking/getVehicle",
-			  {
-				id:available_vehicle_id
-			  },function(data1){data1=jQuery.parseJSON(data1);
-				var selected="selected=selected"; 
-				var reg_num=data1.data[0].registration_number;
-				
-				selected_option="<option value='"+data1.data[0].id+"' vehicle_model_id='"+data1.data[0].vehicle_model_id+"'  vehicle_make_id='"+data1.data[0].vehicle_make_id+"' "+selected+">"+reg_num.substr(reg_num.length - 4)+"</option>";
-				$('#available_vehicle').append(selected_option);
-				});
-			}
-			if(data!='false'){ 
-			data=jQuery.parseJSON(data);
-			
-			
-			//var vehicle_models=$('.vehicle-models').html().split(',');
-			for(var i=0;i<data.data.length;i++){
-				if(available_vehicle_id==data.data[i].vehicle_id){
-				var selected="selected=selected";
-				}else{
-				var selected="";
-				}
-				//alert(data.data[i].registration_number);
-			  $('#available_vehicle').append($("<option value='"+data.data[i].vehicle_id+"' vehicle_model_id='"+data.data[i].vehicle_model_id+"'  vehicle_make_id='"+data.data[i].vehicle_make_id+"' "+selected+"></option>").text(data.data[i].registration_number));
-				//i=Number(i)+1;
-			}
-		
-			}else{
-					
-					if(Trim(available_vehicle_id)=='' || Trim(available_vehicle_id)==-1 ){	
-						
-					alert('No Available Vehicles');
-				}
-					
-			}
-			$('.display-me').css('display','none');
-		   });
-
-}*/
-
+/* INTELLIGENCE PORTION
 function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehicle_ac_type,pickupdatetime,dropdatetime,available_vehicle_id=''){
 	
 
@@ -1567,7 +1411,7 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 		$('.display-me').css('display','none');
 	   });
 
-}
+}*/
 
 function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id){
 	var tarif_id=tarif_id;

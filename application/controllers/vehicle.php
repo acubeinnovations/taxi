@@ -324,11 +324,11 @@ class Vehicle extends CI_Controller {
 			 $err=False;
 			 $this->mysession->set('model','Choose Model Type');
 			}
-			if($driver_data['driver_id'] ==-1){
+			/*if($driver_data['driver_id'] ==-1){
 			 $driver_data['driver_id'] ='';
 			 $err=False;
 			 $this->mysession->set('Driver','Choose Any Driver');
-			} 
+			} */
 
 	 if($this->form_validation->run()==False|| $err==False){
 	

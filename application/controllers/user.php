@@ -485,13 +485,10 @@ class User extends CI_Controller {
 				}
 			}
 			
-			$data['driver_availability']=$this->driver_model->GetDriverForTripBooking();
-
-			//echo date('Y-m-d H:i');
-			//$conditon =array('trip_status_id'=>TRIP_STATUS_PENDING,'CONCAT(pick_up_date," ",pick_up_time) >='=>date('Y-m-d H:i'),'organisation_id'=>$this->session->userdata('organisation_id'));
-			//$orderby = ' CONCAT(pick_up_date,pick_up_time) ASC';
-			//$data['notification']=$this->trip_booking_model->getDetails($conditon,$orderby);
-			//$data['customers_array']=$this->customers_model->getArray();
+			//$data['driver_availability']=$this->driver_model->GetDriverForTripBooking();
+			$data['driver_availability']=$this->driver_model->getDriversArray();
+			$trim=True;
+			$data['available_vehicles']=$this->trip_booking_model->getVehiclesArray($condion='',$trim);
 				
 
 			//get notification and customer array

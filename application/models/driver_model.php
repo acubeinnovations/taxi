@@ -140,7 +140,8 @@ class Driver_model extends CI_Model {
 	return true;
 	}
 
-	public function GetDriverForTripBooking()
+	/* INTELLIGENCE PORTION
+	public function GetDriverForTripBooking() 
 	{
 		$sql = "SELECT dr.id,dr.name FROM drivers dr WHERE dr.id NOT IN (SELECT driver_id FROM trips WHERE NOW() BETWEEN CONCAT(pick_up_date,' ',pick_up_time) AND CONCAT(drop_date,' ',drop_time))
 GROUP BY dr.id";
@@ -169,7 +170,7 @@ FROM trips trip WHERE  trip.driver_id ='".$avl_driver['id']."' AND CONCAT(trip.p
 			}
 		}
 		return $drivers;
-	}
+	}*/
 
 
 
