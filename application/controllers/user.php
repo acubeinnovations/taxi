@@ -1140,7 +1140,7 @@ class User extends CI_Controller {
 		if($this->session_check()==true) {
 			if($this->mysession->get('condition')!=null){
 				$condition=$this->mysession->get('condition');
-				if(isset($condition['where']['trip_pick_date'])){
+				if(!isset($condition['customers'])){
 					$this->mysession->delete('condition');
 				}
 			}
@@ -1188,7 +1188,7 @@ class User extends CI_Controller {
 				$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry,"customers"=>true));
 			}
 			if(is_null($this->mysession->get('condition'))){
-			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry));
+			$this->mysession->set('condition',array("where"=>$where_arry,"like"=>$like_arry,'customers'=>true));
 			}
 					
 			$paginations=$this->mypage->paging($tbl,$per_page,$param2,$baseurl,$uriseg,$model='');
