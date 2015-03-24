@@ -98,6 +98,10 @@ define('BEACON_LIGHT_BLUE',2);
 define('gINVALID',-1);
 
 define('OWNED_VEHICLE',1);
+
+//driver status
+define('OWNED_DRIVER',1);
+define('ATTACHED_DRIVER',2);
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes

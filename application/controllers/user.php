@@ -1927,7 +1927,7 @@ public function profile() {
 			}
 	}
 	public function select_Box_Values(){
-		$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types');
+		$tbl_arry=array('marital_statuses','bank_account_types','id_proof_types','driver_statuses');
 		$this->load->model('user_model');
 		for ($i=0;$i<count($tbl_arry);$i++){
 		$result=$this->user_model->getArray($tbl_arry[$i]);

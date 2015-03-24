@@ -35,6 +35,7 @@
 	$password =	'';
 	$salary= '';
 	$min_wrk_days= '';
+	$driver_status_id = OWNED_DRIVER;
 	
 
  if($this->mysession->get('post')!=null){ 
@@ -74,6 +75,7 @@
 	$password	=	$data['password'];
 	$salary		= 	$data['salary']; 
 	$min_wrk_days	= 	$data['minimum_working_days']; 
+	$driver_status_id =  $data['driver_status_id']; 
 $this->mysession->delete('post');
 }
  else if(isset($result)&&$result!=null){ 
@@ -112,7 +114,8 @@ $this->mysession->delete('post');
 	$password	=	$result['password'];
 	$h_pass	=	$result['password'];
 	$salary		= 	$result['salary']; 
-	$min_wrk_days	= 	$result['minimum_working_days']; 	
+	$min_wrk_days	= 	$result['minimum_working_days']; 
+	$driver_status_id =  $result['driver_status_id']; 	
 } 
 ?>
 <?php if($this->session->userdata('dbSuccess') != '') {?>
@@ -300,15 +303,28 @@ $this->mysession->delete('post');
 			echo form_input($input);?>
 	   <?php echo $this->form_functions->form_error_session('date_of_joining', '<p class="text-red">', '</p>'); ?>
         </div>	
+
+
+	<div class="form-group">
+		<?php echo form_label('Driver Status','driver_status_id'); ?>
+	     	<?php
+		$class="form-control";$id = 'driver_status_id';
+		$msg="Driver Status";
+		$name="driver_status_id";
+		echo $this->form_functions->populate_dropdown($name,$select['driver_statuses'],$driver_status_id,$class,$id,$msg);
+		
+		?>
+		<p class="text-red">
+		<?php if($this->mysession->get('driver_status') != ''){
+			echo $this->mysession->get('driver_status');
+			$this->mysession->delete('driver_status');
+		} ?>
+		</p>
+	</div>
 	
-		<div class="form-group">
-	<?php echo form_label('License Number','usernamelabel'); ?>
-           <?php $input =array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number);
-			if(!$edit_profile)					
-				$input['disabled'] ='';
-			echo form_input($input); ?>
-	   <?php echo $this->form_functions->form_error_session('license_number', '<p class="text-red">', '</p>'); ?>
-        </div>
+
+	
+		
 	
 	<div class="form-group">
 	<?php echo form_label('Date of License Renewal','usernamelabel'); ?>
@@ -428,6 +444,16 @@ $this->mysession->delete('post');
 		echo form_input($input); ?>
 	   <?php echo $this->form_functions->form_error_session('ifsc_code', '<p class="text-red">', '</p>'); ?>
         </div>
+
+	<div class="form-group">
+	<?php echo form_label('License Number','usernamelabel'); ?>
+           <?php $input =array('name'=>'license_number','class'=>'form-control','id'=>'license_number','placeholder'=>'License Number','value'=>$license_number);
+			if(!$edit_profile)					
+				$input['disabled'] ='';
+			echo form_input($input); ?>
+	   <?php echo $this->form_functions->form_error_session('license_number', '<p class="text-red">', '</p>'); ?>
+        </div>
+
 	<div class="form-group">
 	<?php echo form_label('ID Proof Type','usernamelabel'); ?>
 	<?php

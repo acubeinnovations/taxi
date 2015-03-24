@@ -91,6 +91,7 @@ class Driver extends CI_Controller {
 	$dr_id=$this->input->post('hidden_id');
 	$data['salary']=$this->input->post('salary');
 	$data['minimum_working_days']=$this->input->post('minimum_working_days');
+	$data['driver_status_id']=$this->input->post('driver_status_id');
 	$data['organisation_id']=$this->session->userdata('organisation_id'); 
 	$data['user_id']=$this->session->userdata('id'); 
 	$hidden_pass=$this->input->post('h_pass');
