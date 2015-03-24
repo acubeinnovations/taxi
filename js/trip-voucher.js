@@ -22,7 +22,7 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 }
 });
 
-//--to expand and collapse table rows for trips	
+	//--to expand and collapse table rows for trips	
 
 	$('.common').click(function(){ 
 		$(this).hide();
@@ -36,7 +36,15 @@ var r = confirm("Please Select Vehicle Model To Complete The Trip..Click OK to C
 	
 	});
 	
-			//ends function		
+	$('#vehicle_model_id').on('change',function(){
+		var vehicle_model_id = $(this).val();
+		var customer_id = $('input[name="customer_id"]').val();
+		id='#trip-tariff';
+
+		var vehicle_ac_type_id = $('input[name="vehicle_ac_type_id"]').val();
+		var tarrif_id = $('input[name="tariff_id"]').val();
+		generateTariffs(vehicle_model_id,vehicle_ac_type_id,tarrif_id,id,customer_id);
+	});
 
 
 var nighthalt_flag = false;//night halt flag variable
@@ -120,11 +128,17 @@ $('.voucher').on('click',function(){
 	}
 
 	
-				$('.customer').val(customer_name);
-				$('.company').val(company_name);
-				$('.model').val(model);
-				$('.vehicleno').val(vehicle_no);
-				$('.ownership').val(ownership);
+	$('.customer').val(customer_name);
+	$('.company').val(company_name);
+	$('#vehicle_model_id').val(vehicle_model_id);
+	$('.vehicleno').val(vehicle_no);
+	$('.ownership').val(ownership);
+
+	//set for hidden inputs
+	$('input[name="vehicle_ac_type_id"]').val(vehicle_ac_type_id);
+	$('input[name="tariff_id"]').val(tarrif_id);
+	$('input[name="customer_id"]').val(customer_id);
+
 	//function to hide vehicle payment percentages
 	 
 	if($(".ownership").val()!=ATTACHED_VEHICLE){ 

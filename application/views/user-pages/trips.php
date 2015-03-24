@@ -415,7 +415,14 @@ echo form_close();?></td>
 					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('Vehicle','model'); ?>
-							<?php echo form_input(array('name'=>'model','class'=>'form-control padding-2px-0-0-10-px voucher-text-box model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
+							<?php // echo form_input(array('name'=>'model','class'=>'form-control padding-2px-0-0-10-px voucher-text-box model','placeholder'=>'Vehicle Model','readonly'=>'true','tabindex'=>"13")); 
+						$name = 'vehicle_model_id';
+						$class="form-control";
+						$msg="Vehicle Model";
+						echo $this->form_functions->populate_dropdown($name,$vehicle_models,$vehicle_model_id = '',$class,$id='vehicle_model_id',$msg);
+						echo form_hidden('vehicle_ac_type_id');
+						echo form_hidden('tariff_id');
+						echo form_hidden('customer_id');
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
@@ -621,12 +628,12 @@ echo form_close();?></td>
 					<div class="div-with-15-percent-width-with-margin-10">
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('No of Days','daysno'); ?>
-							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno padding-2px-0-0-10-px voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno padding-2px-0-0-10-px voucher-text-box','placeholder'=>'No Of Days','tabindex'=>"15")); 
 							?>
 						</div>
 						<div class=" form-group margin-bottom-0-px">
 							<?php echo form_label('No of Days','daysno'); ?>
-							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno  padding-2px-0-0-10-px voucher-text-box','placeholder'=>'No Of Days','readonly'=>'true','tabindex'=>"15")); 
+							<?php echo form_input(array('name'=>'daysno','class'=>'form-control daysno  padding-2px-0-0-10-px voucher-text-box','placeholder'=>'No Of Days','tabindex'=>"15")); 
 							?>
 						</div>
 						
