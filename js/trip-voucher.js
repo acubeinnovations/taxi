@@ -150,6 +150,7 @@ $('.voucher').on('click',function(){
 			$('#vehicle_model_id').val(vehicle_model_id);
 			$('.vehicleno').val(vehicle_no);
 			$('.ownership').val(ownership);
+			$('.driver_status').val(driver_status_id);
 
 			//set for hidden inputs
 			$('input[name="vehicle_ac_type_id"]').val(vehicle_ac_type_id);
@@ -1987,32 +1988,51 @@ $('.vehiclekmpaymentpercentage,.vehiclehrpaymentpercentage').on('blur change',fu
 
 function calculatePaymentAmount(whom){
 
-totkmamount=$('.total'+whom+'kmamount').val();
-tothramount=$('.total'+whom+'hramount').val();
-noofdays=$('.daysno').val();
-if($('.'+whom+'kmpaymentpercentage option:selected').val()==-1){
-kmpaymentpercentage=0;
-}else{
-kmpaymentpercentage=Number($('.'+whom+'kmpaymentpercentage option:selected').text());
-}
-if($('.'+whom+'hrpaymentpercentage option:selected').val()==-1){
-hrpaymentpercentage=0;
-}else{
-hrpaymentpercentage=Number($('.'+whom+'hrpaymentpercentage option:selected').text());
-}
+	
+	totkmamount=$('.total'+whom+'kmamount').val();
+	tothramount=$('.total'+whom+'hramount').val();
+	noofdays=$('.daysno').val();
+	if($('.'+whom+'kmpaymentpercentage option:selected').val()==-1){
+		kmpaymentpercentage=0;
+	}else{
+		kmpaymentpercentage=Number($('.'+whom+'kmpaymentpercentage option:selected').text());
+	}
 
-if(totkmamount!='' && (tothramount!='' || Number(noofdays)>1) && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
+	if($('.'+whom+'hrpaymentpercentage option:selected').val()==-1){
+		hrpaymentpercentage=0;
+	}else{
+		hrpaymentpercentage=Number($('.'+whom+'hrpaymentpercentage option:selected').text());
+	}
 
-kmcommsn=(Number(totkmamount)*(Number(kmpaymentpercentage)/100)).toFixed(2);
-hrcommsn=(Number(tothramount)*(Number(hrpaymentpercentage)/100)).toFixed(2);
+	if(totkmamount!='' && (tothramount!='' || Number(noofdays)>1) && kmpaymentpercentage!='' && hrpaymentpercentage!=''){
 
-$('.'+whom+'paymentkmamount').val(kmcommsn);
-$('.'+whom+'paymenthramount').val(hrcommsn);
+		kmcommsn=(Number(totkmamount)*(Number(kmpaymentpercentage)/100)).toFixed(2);
+		hrcommsn=(Number(tothramount)*(Number(hrpaymentpercentage)/100)).toFixed(2);
 
-}else{
-$('.'+whom+'paymentkmamount').val(0);
-$('.'+whom+'paymenthramount').val(0);
-}
+		$('.'+whom+'paymentkmamount').val(kmcommsn);
+		$('.'+whom+'paymenthramount').val(hrcommsn);
+
+	}else{
+		kmcommsn = 0;
+		hrcommsn = 0;
+	}
+
+	var ownership = $('.ownership').val();
+	var driver_status = $('.driver_status').val();
+	var driverbata = $('.driverbata').val();
+	var nighthalt = $('.nighthalt').val();
+	
+	/*if(ownership == OWNED_VEHICLE && driver_status_id == OWNED_DRIVER){
+		kmcommsn = Number(kmcommsn);
+		hrcommsn = Number(hrcommsn);
+	}else{
+		kmcommsn = Number(kmcommsn)+Number(driverbata)+Number(nighthalt);
+		hrcommsn = Number(hrcommsn)+Number(driverbata)+Number(nighthalt);
+	}*/
+
+
+	$('.'+whom+'paymentkmamount').val(kmcommsn);
+	$('.'+whom+'paymenthramount').val(hrcommsn);
 
 }
 

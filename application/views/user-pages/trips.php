@@ -395,7 +395,12 @@ echo form_close();?></td>
 				<div class="row-source-full-100-percent-width-with-margin-8">
 					<div class="div-with-20-percent-width-with-margin-10 margin-15px-10px-0-10px">
 					
-					<div class="hide-me" ><?php echo form_input(array('name'=>'ownership','class'=>'ownership'));?></div>
+					<div class="hide-me" >
+					<?php 
+					echo form_input(array('name'=>'ownership','class'=>'ownership'));
+					echo form_input(array('name'=>'driver_status','class'=>'driver_status'));
+					?>
+					</div>
 				
 						<div class=" form-group margin-bottom-0-px">
 						   <?php echo form_label('Voucher Number','voucherno'); ?>
