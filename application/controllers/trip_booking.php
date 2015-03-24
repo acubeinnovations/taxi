@@ -53,6 +53,9 @@ class Trip_booking extends CI_Controller {
 			}else if($param2=='getVouchers') {
 		
 				$this->getVouchers();
+			}else if($param2=='getTripVoucher') {
+		
+				$this->getTripVoucher();
 			}else if($param2=='getTripExpenses') {
 		
 				$this->getTripExpenses();
@@ -672,6 +675,7 @@ class Trip_booking extends CI_Controller {
 			$data["total_trip_amount"]	= $_REQUEST["total_trip_amount"];
 			$data["trip_narration"]		= $_REQUEST["trip_narration"];
 			$data["payment_type_id"]	= $_REQUEST["payment_type_id"];
+			$data["tax_group_id"]	= $_REQUEST["tax_group"];
 
 			//trip expense
 			if(isset($_REQUEST['expense'])){
@@ -783,7 +787,26 @@ class Trip_booking extends CI_Controller {
 		}
 	}
 	}
+	
+	public function getTripVoucher($trip_id='',$ajax='NO'){ 
+		if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 
+			$trip_id=$_REQUEST['trip_id'];
+			$ajax=$_REQUEST['ajax'];
+		}
+		$Tripvoucher=$this->trip_booking_model->getTripVoucher($trip_id);
+		if($Tripvoucher){
+			if($Tripvoucher['voucher']){
+				$Tripvoucher['voucher']->trip_expense = unserialize($Tripvoucher['voucher']->trip_expense);
+			}			
+		}
 
+		if($ajax=='NO'){
+			return $Tripvoucher;
+		}else{
+			header('Content-Type: application/json'); 
+			echo json_encode($Tripvoucher);
+		}
+	}
 
 	public function getTarrif(){
 		if($_REQUEST['tarrif_id'] && $_REQUEST['ajax']){
