@@ -532,8 +532,9 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 	*/
 	$sql = "SELECT trans.trans_no,
 			branch.branch_code,
-			IF(cg.name IS NULL,'CASH', cg.name) AS company,
+			IF(cg.name IS NULL,' ', cg.name) AS company,
 			IF(trip.customer_group_id > 0 ,cnc_customer.name,debtor.name) as customer,
+			cnc_guest.name as guest,
 			voucher.trip_id,
 			voucher.voucher_no,
 			trip.pick_up_date,
@@ -552,6 +553,7 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 		 .TB_PREF."cust_branch as branch,trip_vouchers voucher,trips trip
 		LEFT JOIN customer_groups cg  ON  cg.id = trip.customer_group_id
 		LEFT JOIN customers cnc_customer  ON  trip.customer_id = cnc_customer.id
+		LEFT JOIN customers cnc_guest  ON  trip.guest_id = cnc_guest.id
 			WHERE
 			sorder.order_no = trans.order_ AND
 			trans.debtor_no = debtor.debtor_no
