@@ -747,10 +747,9 @@ $cnc_voucher = false;
 if(isset($_GET['NewDelivery']) && $_GET['NewDelivery'] > 0){
 
 	$cnc_voucher = get_cnc_voucher($_GET['NewDelivery']);
-
-	if(isset($_GET['TaxGroup'])){
-		$_SESSION['Items']->tax_group_from_cnc = $_GET['TaxGroup'];
-	}
+	if($cnc_voucher['tax_group_id'] > 0)
+		$_SESSION['Items']->tax_group_from_cnc = $cnc_voucher['tax_group_id'];
+	
 	
 	if($cnc_voucher['group_id'] > 0){
 		$_SESSION['Items']->customer_id = get_cnc_customer_id("CG".$cnc_voucher['group_id']);

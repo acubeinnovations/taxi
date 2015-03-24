@@ -103,6 +103,7 @@ function get_cnc_voucher($id = 0)
 		voucher.no_of_days,
 		voucher.trip_narration,
 		voucher.payment_type_id,
+		voucher.tax_group_id,
 		vmodels.name as vehicle_model
 		";
 	$sql .="  FROM trip_vouchers voucher ";
