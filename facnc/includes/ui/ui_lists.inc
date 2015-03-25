@@ -701,6 +701,114 @@ function customer_group_list_row($label, $name, $selected_id=null, $all_option =
 		$show_inactive, $editkey);
 	echo "</td>\n</tr>\n";
 }
+//------------------------------------------------------------------------------------------------
+
+//-------------------------taxi customer groups---------------------------------------------------
+function taxi_customer_group_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
+	$show_inactive=false)
+{
+	global $all_items;
+
+	$sql = "SELECT cg.id,cg.name,debtor.debtor_ref  FROM customer_groups cg ";
+	$sql .= "LEFT JOIN ".TB_PREF."debtors_master debtor ON debtor.debtor_ref = CONCAT('CG',cg.id)";
+
+	$mode = get_company_pref('no_customer_group_list');
+
+
+	$ret = combo_input($name, $selected_id, $sql, 'id', 'name',
+	array(
+	    'format' => '_format_add_curr',
+	    'order' => array('cg.name'),
+		'search_box' => $mode!=0,
+		'type' => 1,
+		'size' => 20,
+		'spec_option' => $spec_option === true ? _("All Customer Groups") : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'async' => false,
+		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment; F2 - entry new customer') :
+		_('Select Customer Group'),
+		'show_inactive' => $show_inactive
+	) );
+	return $ret;
+}
+
+function taxi_customer_group_list_cells($label, $name, $selected_id=null, $all_option=false, 
+	$submit_on_change=false, $show_inactive=false)
+{
+	if ($label != null)
+		echo "<td>$label</td>\n";
+	echo "<td nowrap>";
+	echo taxi_customer_group_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive);
+	echo "</td>\n";
+}
+
+function taxi_customer_group_list_row($label, $name, $selected_id=null, $all_option = false, 
+	$submit_on_change=false, $show_inactive=false)
+{
+	global $path_to_root;
+
+	echo "<tr><td class='label'>$label</td><td nowrap>";
+	echo taxi_customer_group_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive);
+	echo "</td>\n</tr>\n";
+}
+//------------------------------taxi customers----------------------------------------------------
+
+function taxi_customer_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
+	$show_inactive=false)
+{
+	global $all_items;
+
+	$sql = "SELECT c.id, c.name,debtor.debtor_ref FROM customers c ";
+	$sql .= "LEFT JOIN ".TB_PREF."debtors_master debtor ON debtor.debtor_ref = CONCAT('C',c.id)";
+
+	$mode = get_company_pref('no_customer_list');
+
+	
+
+	$ret = combo_input($name, $selected_id, $sql, 'c.id', 'c.name',
+	array(
+	    'format' => '_format_add_curr',
+	    'order' => array('c.name'),
+		'search_box' => $mode!=0,
+		'type' => 1,
+		'size' => 20,
+		'spec_option' => $spec_option === true ? _("All Customers") : $spec_option,
+		'spec_id' => $all_items,
+		'select_submit'=> $submit_on_change,
+		'async' => false,
+		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment; F2 - entry new customer') :
+		_('Select customer'),
+		'show_inactive' => $show_inactive
+	) );
+	
+	return $ret;
+}
+
+function taxi_customer_list_cells($label, $name, $selected_id=null, $all_option=false, 
+	$submit_on_change=false, $show_inactive=false)
+{
+	if ($label != null)
+		echo "<td>$label</td>\n";
+	echo "<td nowrap>";
+	echo taxi_customer_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive);
+	echo "</td>\n";
+}
+
+function taxi_customer_list_row($label, $name, $selected_id=null, $all_option = false, 
+	$submit_on_change=false, $show_inactive=false)
+{
+	global $path_to_root;
+
+	echo "<tr><td class='label'>$label</td><td nowrap>";
+	echo taxi_customer_list($name, $selected_id, $all_option, $submit_on_change,
+		$show_inactive);
+	echo "</td>\n</tr>\n";
+}
+
 //-------------------------------------------------------------------------------------------
 
 function customer_list($name, $selected_id=null, $spec_option=false, $submit_on_change=false, 
@@ -756,8 +864,8 @@ function customer_list_row($label, $name, $selected_id=null, $all_option = false
 		$show_inactive, $editkey);
 	echo "</td>\n</tr>\n";
 }
-
 //------------------------------------------------------------------------------------------------
+
 
 function customer_branches_list($customer_id, $name, $selected_id=null,
 	$spec_option = true, $enabled=true, $submit_on_change=false, $editkey = false)

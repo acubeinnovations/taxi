@@ -89,6 +89,7 @@ if (get_post('_DeliveryNumber_changed'))
 	$disable = get_post('DeliveryNumber') !== '';
 	$Ajax->addDisable(true, 'TripId', $disable);
 	$Ajax->addDisable(true, 'CustomerGroup', $disable);
+	$Ajax->addDisable(true, 'Customer', $disable);
 	$Ajax->addDisable(true, 'DeliveryAfterDate', $disable);
 	$Ajax->addDisable(true, 'DeliveryToDate', $disable);
 		
@@ -104,6 +105,7 @@ if (get_post('_TripId_changed'))
 {
 	$disable = get_post('TripId') !== '';
 	$Ajax->addDisable(true, 'CustomerGroup', $disable);
+	$Ajax->addDisable(true, 'Customer', $disable);
 	$Ajax->addDisable(true, 'DeliveryNumber', $disable);
 	$Ajax->addDisable(true, 'DeliveryAfterDate', $disable);
 	$Ajax->addDisable(true, 'DeliveryToDate', $disable);
@@ -125,12 +127,13 @@ start_table_left(TABLESTYLE_NOBORDER);
 	start_row();
 		ref_cells(_("#:"), 'DeliveryNumber', '',null, '', true,5);
 		date_cells(_("from:"), 'DeliveryAfterDate', '', null, -30);
-		customer_group_list_cells(_("Customer Group:"), 'CustomerGroup', null, true, true);
+		taxi_customer_group_list_cells(_("Customer Group:"), 'CustomerGroup', null, true, true);
 		submit_cells('SearchOrders', _("Search"),'',_('Select documents'), 'default');
 	end_row();
 	start_row();
 		ref_cells(_("Trip Id:"), 'TripId', '',null, '', true,5);
 		date_cells(_("to:"), 'DeliveryToDate', '', null, 1);
+		taxi_customer_list_cells(_("Customer:"), 'Customer', null, true, true);
 		
 	end_row();
 

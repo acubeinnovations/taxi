@@ -596,12 +596,16 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 		if (isset($_POST['StockLocation']) && $_POST['StockLocation'] != ALL_TEXT)
 			$sql .= " AND sorder.from_stk_loc = ".db_escape($_POST['StockLocation'])." ";
 		if (isset($_POST['CustomerGroup']) && $_POST['CustomerGroup'] != ALL_TEXT)
-			$sql .= " AND trans.debtor_no = ".db_escape($_POST['CustomerGroup'])." ";
+			$sql .= " AND trip.customer_group_id = ".db_escape($_POST['CustomerGroup'])." ";
+		if (isset($_POST['Customer']) && $_POST['Customer'] != ALL_TEXT)
+			$sql .= " AND trip.customer_id = ".db_escape($_POST['Customer'])." ";
 
 		$sql .= " GROUP BY trans.trans_no ";
 
 	} //end no delivery number selected
 	$sql .= " ORDER BY voucher.id DESC ";
+
+	//echo $sql;
 	return $sql;
 }
 
