@@ -60,6 +60,7 @@ ALTER TABLE `organisations`  ADD `quotation_template` VARCHAR(25) NOT NULL;
 
 --****need to be updated 24/02/2015********
 ALTER TABLE `drivers`  ADD `driver_status_id` INT(11) NOT NULL AFTER `minimum_working_days`
+ALTER TABLE `trip_vouchers` ADD `tax_group_id` INT(11) NOT NULL AFTER `id`;
 
 
 
