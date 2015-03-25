@@ -141,6 +141,7 @@ $(document).ready(function(){
 
 				//payment blocks display options
 				if(ownership == OWNED_VEHICLE && driver_status_id==OWNED_DRIVER){
+					
 					//both owned
 					$(".vehicle-payment").css('display','none'); 
 					$(".driver-payment").css('display','block');
@@ -598,54 +599,83 @@ $(document).ready(function(){
 		data['adtdriverkmrate']=driveradtkmrate=$('.adtdriverkmrate').val();
 	
 
-		if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverhramount'){ 
-			var driverbase_km_hr='H';
-			 data['driverpaymenthramount']=driverpaymentamount= $('.driverpaymenthramount').val();
-			 data['driverhrpaymentpercentage']=driverpaymentpercentage=$('.driverhrpaymentpercentage').val();
-			 data['totaldriverhramount']=totaldrivertripamount=$('.totaldriverhramount').val();
-			 data['driverpaymentkmamount']='NO_VALUE';
-			 data['driverkmpaymentpercentage']='NO_VALUE';
-		}else if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverkmamount'){
-			 var driverbase_km_hr='K';
-			 data['driverpaymentkmamount']=driverpaymentamount= $('.driverpaymentkmamount').val();
-			 data['driverkmpaymentpercentage']=driverpaymentpercentage=$('.driverkmpaymentpercentage').val();
-			 data['totaldriverkmamount']=totaldrivertripamount=$('.totaldriverkmamount').val();
-			 data['driverpaymenthramount']='NO_VALUE';
-			 data['driverhrpaymentpercentage']='NO_VALUE';
-		}	
-
 		data['basevehiclekm']=vehiclebasekm=$('.basevehiclekm').val();
 		data['basevehiclekmamount']=vehiclebasekmamount=$('.basevehiclekmamount').val();
 		data['adtvehiclekmrate']=vehicleadtkmrate=$('.adtvehiclekmrate').val();
-	
-		if($(".ownership").val()!=ATTACHED_VEHICLE){
-		vehiclepaymentamount= 0;
-		vehiclepaymentpercentage=0;
-		totalvehicletripamount=0;
-		vehiclebase_km_hr='';
+
+
+
+		var ownership = $(".ownership").val();
+		var driver_status_id = $(".driver_status").val();
+
+		if(ownership == OWNED_VEHICLE && driver_status_id==OWNED_DRIVER){
+					
+			//both owned
+			vehicle_payment = false;
+			driver_payment = true;
+		}else if(ownership == ATTACHED_VEHICLE && driver_status_id==ATTACHED_DRIVER){
+			//both attached
+			vehicle_payment = true;
+			driver_payment = false;
+		}else if(ownership == OWNED_VEHICLE && driver_status_id==ATTACHED_DRIVER){
+			//owned vehicle and attached driver
+			vehicle_payment = false;
+			driver_payment = true;
 		}else{
-
-		  if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){ 
-			var vehiclebase_km_hr='H'; 
-				data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
-				data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();
-				data['totalvehiclehramount']=totalvehicletripamount=$('.totalvehiclehramount').val();
-				data['vehiclepaymentkmamount']= 'NO_VALUE';
-				data['vehiclekmpaymentpercentage']='NO_VALUE';
+			vehicle_payment = true;
+			driver_payment = true;
+		}
 		
-		  }else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
-			var vehiclebase_km_hr='K'; 
-				data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
-				data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
-				data['totalvehiclekmamount']=totalvehicletripamount=$('.totalvehiclekmamount').val();
-				data['vehiclepaymenthramount']='NO_VALUE';
-				data['vehiclehrpaymentpercentage']='NO_VALUE';
-		
-		  }
-		}	
-	   
+		if(driver_payment){
+			
+			if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverhramount'){ 
+				var driverbase_km_hr='H';
+				data['driverpaymenthramount']=driverpaymentamount= $('.driverpaymenthramount').val();
+				data['driverhrpaymentpercentage']=driverpaymentpercentage=$('.driverhrpaymentpercentage').val();
+				data['totaldriverhramount']=totaldrivertripamount=$('.totaldriverhramount').val();
+				data['driverpaymentkmamount']='NO_VALUE';
+				data['driverkmpaymentpercentage']='NO_VALUE';
+			}else if($('.totaldriverkmamount').attr('amount-class-to-be-selected')=='totaldriverkmamount'){
+				var driverbase_km_hr='K';
+				data['driverpaymentkmamount']=driverpaymentamount= $('.driverpaymentkmamount').val();
+				data['driverkmpaymentpercentage']=driverpaymentpercentage=$('.driverkmpaymentpercentage').val();
+				data['totaldriverkmamount']=totaldrivertripamount=$('.totaldriverkmamount').val();
+				data['driverpaymenthramount']='NO_VALUE';
+				data['driverhrpaymentpercentage']='NO_VALUE';
+			}
+		}else{
+			driverpaymentamount= 0;
+			driverpaymentpercentage=0;
+			totaldrivertripamount=0;
+			driverbase_km_hr='';
+		}
 
-	    
+
+		if(vehicle_payment) {
+			if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclehramount'){ 
+				var vehiclebase_km_hr='H'; 
+					data['vehiclepaymenthramount']=vehiclepaymentamount= $('.vehiclepaymenthramount').val();
+					data['vehiclehrpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclehrpaymentpercentage').val();
+					data['totalvehiclehramount']=totalvehicletripamount=$('.totalvehiclehramount').val();
+					data['vehiclepaymentkmamount']= 'NO_VALUE';
+					data['vehiclekmpaymentpercentage']='NO_VALUE';
+	
+			  }else if($('.totalvehiclekmamount').attr('amount-class-to-be-selected')=='totalvehiclekmamount'){
+				var vehiclebase_km_hr='K'; 
+					data['vehiclepaymentkmamount']=vehiclepaymentamount= $('.vehiclepaymentkmamount').val();
+					data['vehiclekmpaymentpercentage']=vehiclepaymentpercentage=$('.vehiclekmpaymentpercentage').val();
+					data['totalvehiclekmamount']=totalvehicletripamount=$('.totalvehiclekmamount').val();
+					data['vehiclepaymenthramount']='NO_VALUE';
+					data['vehiclehrpaymentpercentage']='NO_VALUE';
+	
+			 }
+		}else{alert("vehicle false");
+			vehiclepaymentamount= 0;
+			vehiclepaymentpercentage=0;
+			totalvehicletripamount=0;
+			vehiclebase_km_hr='';
+		}
+	   	    
 		data['basedriverhrs']=driverbasehr=$('.basedriverhrs').val();
 		data['basedriverhrsamount']=driverbasehramount=$('.basedriverhrsamount').val();
 		data['adtdriverhrrate']=driveradthrrate=$('.adtdriverhrrate').val();
@@ -677,7 +707,7 @@ $(document).ready(function(){
 			if(Number(expense_amount) > 0)
 				trip_narration=trip_narration+" + "+expense_name+' Rs.'+expense_amount;
 		});
-	
+		
 
 		//total
 		data['totalamount']=totalamount=$('.totalamount').val();

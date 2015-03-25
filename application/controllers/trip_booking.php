@@ -626,7 +626,8 @@ class Trip_booking extends CI_Controller {
 	{
 		
 		if(isset($_REQUEST['start_km_reading']) && isset($_REQUEST['end_km_reading']) && isset($_REQUEST['trip_id'])){
- 
+
+			//echo "<pre>";print_r($_REQUEST);echo "</pre>";exit; 
 
 			$data["trip_id"]		= $_REQUEST["trip_id"];
 			$data["tariff_id"]		= $_REQUEST["tariff_id"];
@@ -675,7 +676,7 @@ class Trip_booking extends CI_Controller {
 			$data["total_trip_amount"]	= $_REQUEST["total_trip_amount"];
 			$data["trip_narration"]		= $_REQUEST["trip_narration"];
 			$data["payment_type_id"]	= $_REQUEST["payment_type_id"];
-			$data["tax_group_id"]	= $_REQUEST["tax_group"];
+			$data["tax_group_id"]		= $_REQUEST["tax_group"];
 
 			//trip expense
 			if(isset($_REQUEST['expense'])){

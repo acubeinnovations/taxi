@@ -205,7 +205,7 @@ function get_driver_vouchers_with_invoice($inv_no){
 		LEFT JOIN trips tr ON tr.id = voucher.trip_id
 		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id
 		LEFT JOIN drivers driver ON driver.id = voucher.driver_id
-		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.")";
+		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.") AND voucher.driver_payment_amount > 0";
 	
 	
 	$result = db_query($sql, "could not get vouchers");
@@ -226,7 +226,7 @@ function get_vehicle_vouchers_with_invoice($inv_no){
 		LEFT JOIN vehicles vh ON vh.id = tr.vehicle_id
 		LEFT JOIN vehicle_owners owner ON owner.id = vh.vehicle_owner_id
 		LEFT JOIN supplier_groups sg ON sg.id = vh.supplier_group_id
-		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.")";
+		WHERE voucher.id IN(SELECT trip_voucher FROM ".TB_PREF."debtor_trans_details WHERE debtor_trans_no =".db_escape($inv_no)." AND debtor_trans_type = ".ST_SALESINVOICE.") AND voucher.vehicle_payment_amount > 0";
 
 
 
