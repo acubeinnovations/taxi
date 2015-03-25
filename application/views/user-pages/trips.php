@@ -150,10 +150,10 @@ echo form_close();?></td>
 						echo '';}else{
 						echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
 					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-						<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
+						<td><?php echo Substr($trips[$trip_index]['pick_up_time'],0,5); ?></td>
 					    
 						 <td><?php if(isset($trips[$trip_index]['pick_up_city'])){
-						 echo substr($trips[$trip_index]['pick_up_city'],0,10)."..";}else{
+						 echo substr($trips[$trip_index]['pick_up_city'],0,10);}else{
 						 
 						 };
 									
@@ -162,7 +162,7 @@ echo form_close();?></td>
 					  <td>
 					  <?php if($trips[$trip_index]['guest_id']==gINVALID || $trips[$trip_index]['guest_id']==0){
 					  echo '';}else{
-					 echo substr($trips[$trip_index]['guest_name'],0,10)."..".br();
+					 echo substr($trips[$trip_index]['guest_name'],0,10).br();
 					    } ?>
 					  </td>
 						<!-- <td><?php echo $trips[$trip_index]['drop_city'].br();
@@ -170,7 +170,7 @@ echo form_close();?></td>
 						 ?></td>-->
 					 <td><?php if($trips[$trip_index]['customer_id']==gINVALID || $trips[$trip_index]['customer_id']==0){
 					 echo '';}else{
-					 echo substr($trips[$trip_index]['customer_name'],0,10)."..".br();
+					 echo substr($trips[$trip_index]['customer_name'],0,10).br();
 					    }
 					   // if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $trips[$trip_index]['customer_group'].br();
 					    //}
@@ -180,7 +180,7 @@ echo form_close();?></td>
 					    <td><?php 
 					    if($trips[$trip_index]['vehicle_id']==gINVALID || $trips[$trip_index]['vehicle_id']==0){
 					    echo 'Nil';}else{
-					    echo substr($trips[$trip_index]['registration_number'],0,10)."..".br();
+					    echo substr($trips[$trip_index]['registration_number'],0,10).br();
 					    }
 					   // if($trips[$trip_index]['vehicle_model_id']==gINVALID || $trips[$trip_index]['vehicle_model_id']==0){echo '';}else{ echo $trips[$trip_index]['model'].br();
 					   // }
@@ -190,7 +190,7 @@ echo form_close();?></td>
 					  <td><?php
 						if($trips[$trip_index]['driver_id']==gINVALID || $trips[$trip_index]['driver_id']==0){
 						echo 'Nil';}else{
-						echo substr($trips[$trip_index]['driver'],0,10)."..";
+						echo substr($trips[$trip_index]['driver'],0,10);
 					    }
 						?></td>
 					    <td>
@@ -257,7 +257,7 @@ echo form_close();?></td>
 					   <!-- <td><?php echo $customers[$trips[$trip_index]['customer_id']].br();
 						if($trips[$trip_index]['customer_group_id']==gINVALID || $trips[$trip_index]['customer_group_id']==0){echo '';}else{ echo $customer_groups[$trips[$trip_index]['customer_group_id']];}?></td>-->
 					    <td><?php echo $trips[$trip_index]['pick_up_date']; ?></td>
-						<td><?php echo $trips[$trip_index]['pick_up_time']; ?></td>
+						<td><?php echo Substr($trips[$trip_index]['pick_up_time'],0,5); ?></td>
 					    
 						 <td><?php if(isset($trips[$trip_index]['pick_up_city'])){echo $trips[$trip_index]['pick_up_city'];}else{};
 									if($trips[$trip_index]['pick_up_area']!=null){ echo ",".br().$trips[$trip_index]['pick_up_area'];}else{};
