@@ -37,10 +37,11 @@ function get_delivery_no($src_id){
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,CONCAT(user.first_name,' ',user.last_name) AS username";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,IFNULL(guest.name,customer.name) AS username";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
-	$sql .= " LEFT JOIN users user ON user.id = trip.user_id";
+	$sql .= " LEFT JOIN customers customer ON customer.id = trip.customer_id";
+	$sql .= " LEFT JOIN customers guest ON guest.id = trip.guest_id";
 	$sql .= " LEFT JOIN vehicles vehicle ON trip.vehicle_id = vehicle.id";
 	$sql .= " WHERE voucher.id = ".db_escape($voucher);
 
@@ -220,7 +221,7 @@ function print_invoices()
 				$rep->Text($rep->totals_column + 5, $key);
 				$rep->Text($rep->totals_column + 90, ":");
 				$rep->Text($rep->totals_column + 95, $value);
-				$rep->NewLine(2);
+				$rep->NewLine(1.5);
 			}
 			
 			$rep->Font();
