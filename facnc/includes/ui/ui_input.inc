@@ -628,6 +628,58 @@ function link_row_ex($label, $name, $size, $max=null, $title=null, $value=null, 
 }
 
 //-----------------------------------------------------------------------------------
+
+function null_date_cells($label, $name, $title = null, $check=null, $inc_days=0, 
+	$inc_months=0, $inc_years=0, $params=null, $submit_on_change=false)
+{
+	global $use_date_picker, $path_to_root, $Ajax;
+
+	/*if (!isset($_POST[$name]) || $_POST[$name] == "")
+	{
+		if ($inc_years == 1001)
+			$_POST[$name] = null;
+		else
+		{
+			$dd = Today();
+			if ($inc_days != 0)
+				$dd = add_days($dd, $inc_days);
+			if ($inc_months != 0)
+				$dd = add_months($dd, $inc_months);
+			if ($inc_years != 0)
+				$dd = add_years($dd, $inc_years);
+			$_POST[$name] = $dd;
+		}
+	}*/
+	if ($use_date_picker)
+	{
+		$calc_image = (file_exists("$path_to_root/themes/".user_theme()."/images/cal.gif")) ? 
+			"$path_to_root/themes/".user_theme()."/images/cal.gif" : "$path_to_root/themes/default/images/cal.gif";
+		$post_label = "<a tabindex='-1' href=\"javascript:date_picker(document.getElementsByName('$name')[0]);\">"
+		. "	<img src='$calc_image' width='16' height='16' border='0' alt='"._('Click Here to Pick up the date')."'></a>\n";
+	}	
+	else
+		$post_label = "";
+
+	if ($label != null)
+		label_cell($label, $params);
+
+	echo "<td>";
+	
+	$class = $submit_on_change ? 'date active' : 'date';
+
+	$aspect = $check ? 'aspect="cdate"' : '';
+	if ($check && (get_post($name) != Today()))
+		$aspect .= ' style="color:#FF0000"';
+
+	default_focus($name);
+	$size = (user_date_format()>3)?11:10; 
+	echo "<input type=\"text\" name=\"$name\" class=\"$class\" $aspect size=\"$size\" maxlength=\"12\" value=\"" 
+	 . $_POST[$name]. "\""
+	 .($title ? " title='$title'": '')." > $post_label";
+	echo "</td>\n";
+	$Ajax->addUpdate($name, $name, $_POST[$name]);
+}
+
 //
 //	Since FA 2.2  $init parameter is superseded by $check. 
 //  When $check!=null current date is displayed in red when set to other 

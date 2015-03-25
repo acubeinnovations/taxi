@@ -600,6 +600,14 @@ function get_sql_for_sales_deliveries_view($selected_customer, $selected_stock_i
 		if (isset($_POST['Customer']) && $_POST['Customer'] != ALL_TEXT)
 			$sql .= " AND trip.customer_id = ".db_escape($_POST['Customer'])." ";
 
+
+		if($_POST['PickupDate'] != null){
+			$sql.=' AND (trip.pick_up_date="'.date2sql($_POST['PickupDate']).'" OR "'.date2sql($_POST['PickupDate']).'" BETWEEN trip.pick_up_date and trip.drop_date)';
+		}else if($_POST['DropDate']!= null){
+			$sql.=' AND (trip.drop_date ="'.$_POST['DropDate'].'")';	
+		}
+
+
 		$sql .= " GROUP BY trans.trans_no ";
 
 	} //end no delivery number selected
