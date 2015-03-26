@@ -75,7 +75,7 @@ function write_sales_invoice(&$invoice)
 	$invoice->due_date, 0, 0, $invoice->dimension_id, 
 	$invoice->dimension2_id, $invoice->payment, $invoice->tax_group_from_cnc); 
 
-	//update trip voucher with delivery no
+	//update trip voucher with invoice no
 	if($invoice_no){
 		update_cnc_voucher_with_transno($invoice->trip_voucher, ST_SALESINVOICE, $invoice_no);
 	}
@@ -86,8 +86,14 @@ function write_sales_invoice(&$invoice)
 	if ($trans_no == 0) {
 		$invoice->trans_no = array($invoice_no=>0);
 	}
-	$total = 0;
+	$total = 0;$advance_payments = array(); //for trip advance
 	foreach ($invoice->line_items as $line_no => $invoice_line) {
+
+		//generate trip advance payments array 
+		if($invoice_line->payment_no > 0){
+			$advance_payments[$invoice_line->payment_no] = $invoice_line->advance_amount;
+		}
+
 		$qty = $invoice_line->qty_dispatched;
 		$line_taxfree_price = get_tax_free_price_for_item($invoice_line->stock_id,
 			$invoice_line->price * $qty, 0, $invoice->tax_included,
@@ -203,10 +209,20 @@ function write_sales_invoice(&$invoice)
 
 	if ($trans_no == 0) {
 		$Refs->save(ST_SALESINVOICE, $invoice_no, $invoice->reference);
-		if ($invoice->payment_terms['cash_sale'] && $invoice->pos['pos_account']) {
-			$amount = $items_total + $items_added_tax + $invoice->freight_cost 
-				+ $freight_added_tax;
+		
+		$amount = $items_total + $items_added_tax + $invoice->freight_cost + $freight_added_tax;
+		//-----------allocate each trip advance payment------
+		
+		foreach($advance_payments as $adv_pmt_no=>$adv_amt){
+			add_cust_allocation($adv_amt, ST_CUSTPAYMENT, $adv_pmt_no, ST_SALESINVOICE, $invoice_no);
 
+			update_debtor_trans_allocation(ST_SALESINVOICE, $invoice_no);
+			update_debtor_trans_allocation(ST_CUSTPAYMENT, $adv_pmt_no);
+			$amount = $amount-$adv_amt;
+		}
+		//---------------------------------------------------
+
+		if ($invoice->payment_terms['cash_sale'] && $invoice->pos['pos_account']) {//cash sale
 			// to use debtors.pmt_discount on cash sale:
 			// extend invoice entry page with final amount after discount 
 			// and change line below.
@@ -221,6 +237,7 @@ function write_sales_invoice(&$invoice)
 			update_debtor_trans_allocation(ST_CUSTPAYMENT, $pmtno, $amount);
 		}
 	}
+
 	hook_db_postwrite($invoice, ST_SALESINVOICE);
 	commit_transaction();
 

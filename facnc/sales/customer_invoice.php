@@ -331,6 +331,8 @@ function check_data()
 
 //-----------------------------------------------------------------------------
 if (isset($_POST['process_invoice']) && check_data()) {
+
+	//echo "<pre>";print_r($_POST);echo "</pre>";exit;
 	$newinvoice=  $_SESSION['Items']->trans_no == 0;
 	copy_to_cart();
 	if ($newinvoice) 
@@ -386,6 +388,8 @@ for ($line_no = 0; $line_no < count($_SESSION['Items']->line_items); $line_no++)
 $dspans[] = $spanlen;
 
 //-----------------------------------------------------------------------------
+
+
 //echo "<pre>";
 //print_r($_SESSION['Items']);
 //echo "</pre>";
@@ -649,10 +653,10 @@ end_table(1);
 
 submit_center_first('Update', _("Update"),
   _('Refresh document page'), true);
-submit_center_last('process_invoice', _("Process Invoice"),
-  _('Check entered data and save document'), 'default');
 //submit_center_last('process_invoice', _("Process Invoice"),
- // _('Check entered data and save document'));
+  //_('Check entered data and save document'), 'default');
+submit_center_last('process_invoice', _("Process Invoice"),
+  _('Check entered data and save document'));
 
 end_form();
 
