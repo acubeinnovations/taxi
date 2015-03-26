@@ -59,6 +59,9 @@ class Trip_booking extends CI_Controller {
 			}else if($param2=='getTripExpenses') {
 		
 				$this->getTripExpenses();
+			}else if($param2=='check-voucher') {
+
+				$this->check_voucher_no();
 			}else{
 				$this->notFound();
 			}	
@@ -774,6 +777,23 @@ class Trip_booking extends CI_Controller {
 			}
 		}
 	}
+
+	public function check_voucher_no($ajax='NO')
+	{
+		if(isset($_REQUEST['ajax']))
+			$ajax=$_REQUEST['ajax'];
+		$voucher_no = @$_REQUEST['voucher_no'];
+			
+		$voucher = $this->trip_booking_model->checkVoucherNo($voucher_no);
+		if($ajax=='NO'){
+			return $voucher;
+		}else{
+			echo ($voucher)?'true':'false';
+				
+		}		
+	}
+
+	
 
 	public function getVouchers($trip_id='',$ajax='NO'){ 
 	if(isset($_REQUEST['trip_id']) && isset($_REQUEST['ajax'])){ 

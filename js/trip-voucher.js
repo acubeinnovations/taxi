@@ -55,6 +55,17 @@ $(document).ready(function(){
 		generateTariffs(vehicle_model_id,vehicle_ac_type_id,tariff_id,id,customer_id,'no');
 	});
 
+	//voucher number 
+	$('#voucherno').on('keyup',function(){
+
+		var voucherno = $(this).val();
+		var _status = $(this).is('[readonly=readonly]');
+		if(voucherno != '' && _status == false){
+			IsVoucherNoUnique(voucherno);	
+		}
+		
+	});
+
 	
 	
 
@@ -2082,6 +2093,24 @@ $(document).ready(function(){
 		}else if(Number(noofdays)>1){
 			$('.tot'+whom+'amount-radio-container1 > .iradio_minimal > .iCheck-helper').trigger('click');
 		}
+	}
+
+	function IsVoucherNoUnique(voucher_no){
+
+		
+		$.post(base_url+"/trip-booking/check-voucher",
+		{
+			ajax:'YES',voucher_no:voucher_no
+		
+		},function(data){
+			if(data == 'true'){
+				$('#voucherno').val('');
+				alert("Voucher Number Already exists");
+			}
+			
+		});
+		
+				
 	}
 
 

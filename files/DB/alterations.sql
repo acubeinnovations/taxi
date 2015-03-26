@@ -87,6 +87,7 @@ ALTER TABLE `trip_vouchers` ADD `tax_group_id` INT(11) NOT NULL AFTER `id`;
 ALTER TABLE `trips`  ADD `payment_no` INT(11) NOT NULL AFTER `advance_amount`;
 
 
+ALTER TABLE `taxi`.`trip_vouchers` DROP INDEX `voucher_no`, ADD UNIQUE `voucher_no` (`voucher_no`);
 
 
 
