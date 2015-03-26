@@ -246,6 +246,27 @@ function get_vehicle_vouchers_with_invoice($inv_no){
 	return $data;
 }
 
+function tripAdvanceParams($trip_id){
+	$sql = "SELECT trip.id,trip.customer_id,trip.customer_group_id,trip.advance_amount,trip.payment_no,
+		debtor.debtor_no,debtor.name,
+		debtorGrp.debtor_no AS debtor_group_no,debtorGrp.name AS group_name
+		FROM ".TB_PREF."debtors_master debtor,trips trip
+		LEFT JOIN ".TB_PREF."debtors_master debtorGrp ON debtorGrp.debtor_ref = CONCAT('CG',trip.customer_group_id)
+		WHERE trip.id = ".db_escape($trip_id)." AND CONCAT('C',trip.customer_id) = debtor.debtor_ref";
+	$result = db_query($sql, "could not get Trip Params");
+	$row = db_fetch_assoc($result);
+
+	return $row;
+}
+
+
+function updateTripPaymentNo($payment_no=0,$trip_id){
+	
+	$sql ="UPDATE trips SET payment_no = ".db_escape($payment_no)." WHERE id = ".db_escape($trip_id);
+	db_query($sql,"The customer could not be updated");
+	
+}
+
 
 
 

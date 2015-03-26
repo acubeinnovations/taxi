@@ -20,6 +20,8 @@ include_once($path_to_root . "/includes/data_checks.inc");
 include_once($path_to_root . "/sales/includes/sales_db.inc");
 include_once($path_to_root . "/reporting/includes/reporting.inc");
 
+
+
 $js = "";
 if ($use_popup_windows) {
 	$js .= get_js_open_window(900, 500);
@@ -43,10 +45,37 @@ if(isset($_GET['CustomerPayment'])){
 	$customer = get_customer($_POST['customer_id']);
 	$branch = get_cust_branch_detail($_POST['customer_id']);
 	page(_($help_context = "Payment Entry"), false, false, "", $js);
-}elseif (isset($_GET['customer_id']))
-{
+}elseif (isset($_GET['customer_id'])){
 	$_POST['customer_id'] = $_GET['customer_id'];
 	page(_($help_context = "Customer Payment Entry"), false, false, "", $js);
+}elseif(isset($_GET['CustomerTripAdvance'])){
+	page(_($help_context = "Confirm Trip Advance"), false, false, "", $js);
+
+	$tripData = tripAdvanceParams($_GET['CustomerTripAdvance']);
+
+	if($tripData){
+		//print_r($tripData);
+
+		if($tripData['payment_no'] > 0){//update payment entry
+			$_GET['trans_no'] = $tripData['payment_no'];
+			$_POST['amount'] = price_format($tripData['advance_amount']);
+		}else{
+			$_POST['customer_id'] = ($tripData['debtor_group_no']!='')?$tripData['debtor_group_no']:$tripData['debtor_no'];
+			$customer = get_customer($_POST['customer_id']);
+			$branch = get_cust_branch_detail($_POST['customer_id']);
+			$_POST['amount'] = price_format($tripData['advance_amount']);
+
+			$cust_name = ($tripData['debtor_group_no']!='')?$tripData['group_name']:$tripData['name'];
+
+			$comments = "Trip Advance From,".$cust_name ." For Trip #".$tripData['id'];
+			$_POST['memo_'] = $comments;
+		}
+
+		$_POST['trip_id'] = $tripData['id'];		
+	}
+	
+}elseif(isset($_GET['AddedAdvance']) || isset($_GET['UpdatedAdvance'])){
+	page(_($help_context = "Trip Booking"), false, false, "", $js);
 }else{
 	page(_($help_context = "Payment Entry"), false, false, "", $js);
 }
@@ -134,6 +163,16 @@ elseif (isset($_GET['UpdatedID'])) {
 
 	hyperlink_no_params($path_to_root . "/sales/customer_payments.php", _("Enter Another &Customer Payment"));
 
+	display_footer_exit();
+}elseif (isset($_GET['AddedAdvance'])) {
+	$payment_no = $_GET['AddedAdvance'];
+
+	display_notification_centered(_("Trip Booked successfully."));
+	display_footer_exit();
+}elseif (isset($_GET['UpdatedAdvance'])) {
+	$payment_no = $_GET['UpdatedAdvance'];
+
+	display_notification_centered(_("Trip Updated successfully."));
 	display_footer_exit();
 }
 
@@ -276,7 +315,18 @@ if (get_post('AddPaymentItem') && can_process()) {
 	$_SESSION['alloc']->write();
 
 	unset($_SESSION['alloc']);
-	meta_forward($_SERVER['PHP_SELF'], $new_pmt ? "AddedID=$payment_no" : "UpdatedID=$payment_no");
+	
+
+	if(isset($_POST['trip_id']) && $_POST['trip_id'] > 0){
+		if($new_pmt)
+			updateTripPaymentNo($payment_no,$_POST['trip_id']);
+		meta_forward($_SERVER['PHP_SELF'], $new_pmt ? "AddedAdvance=$payment_no" : "UpdatedAdvance=$payment_no");
+	}else{
+		meta_forward($_SERVER['PHP_SELF'], $new_pmt ? "AddedID=$payment_no" : "UpdatedID=$payment_no");
+	}
+	//meta_forward($_SERVER['PHP_SELF'], $new_pmt ? "AddedID=$payment_no" : "UpdatedID=$payment_no");
+
+	
 }
 
 //----------------------------------------------------------------------------------------------
@@ -318,7 +368,10 @@ if (isset($_GET['trans_no']) && $_GET['trans_no'] > 0 )
 	$charge = get_cust_bank_charge(ST_CUSTPAYMENT, $_POST['trans_no']);
 	$_POST['charge'] =  price_format($charge);
 	$_POST['DateBanked'] =  sql2date($myrow['tran_date']);
-	$_POST["amount"] = price_format($myrow['Total'] - $myrow['ov_discount']);
+
+	if(!isset($_POST["amount"]) || $_POST["amount"] == '')
+		$_POST["amount"] = price_format($myrow['Total'] - $myrow['ov_discount']);
+
 	$_POST["bank_amount"] = price_format($myrow['bank_amount']+$charge);
 	$_POST["discount"] = price_format($myrow['ov_discount']);
 	$_POST["memo_"] = get_comments_string(ST_CUSTPAYMENT,$_POST['trans_no']);
@@ -336,6 +389,8 @@ if (isset($_GET['trans_no']) && $_GET['trans_no'] > 0 )
 //----------------------------------------------------------------------------------------------
 $new = !$_SESSION['alloc']->trans_no;
 start_form();
+	
+	hidden('trip_id');
 
 	hidden('trans_no');
 	hidden('old_ref', $old_ref);
@@ -352,7 +407,11 @@ start_form();
 		hidden('BranchID', $branch['branch_code']);
 		$_SESSION['alloc']->set_person($customer['debtor_no'], PT_CUSTOMER);
 		$_SESSION['alloc']->read();
-		$_POST['memo_'] = $_POST['amount'] = $_POST['discount'] = '';
+		$_POST['discount'] = '';
+		if(!isset($_POST['amount']))
+			$_POST['amount']='';
+		if(!isset($_POST['memo_']))
+			$_POST['memo_']='';
 		$Ajax->activate('alloc_tbl');
 		read_customer_data($customer['debtor_no']);
 	}else{
@@ -420,15 +479,20 @@ start_form();
 
 	amount_row(_("Amount of Discount:"), 'discount', null, '', $cust_currency);
 
+	
 	amount_row(_("Amount:"), 'amount', null, '', $cust_currency);
 
 	textarea_row(_("Memo:"), 'memo_', null, 22, 4);
 	end_table(1);
 
-	if ($new)
-		submit_center('AddPaymentItem', _("Add Payment"), true, '', 'default');
-	else
+	if ($new){
+		if(isset($_GET['CustomerTripAdvance']))
+			submit_center('AddPaymentItem', _("Confirm"), true, '', 'default');
+		else
+			submit_center('AddPaymentItem', _("Add Payment"), true, '', 'default');
+	}else{
 		submit_center('AddPaymentItem', _("Update Payment"), true, '', 'default');
+	}
 
 	br();
 

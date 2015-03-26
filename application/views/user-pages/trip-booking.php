@@ -1,200 +1,5 @@
 <?php
 
-/*$trip_id			=	'';
-$guest_id			=	gINVALID;
-$booking_source		=	'';
-$source				=	'';
-$customer			=	'';
-$new_customer		=	true;
-$email				=	'';
-$mobile				=	'';
-$advanced			=	'';
-$advanced_vehicle		=	'';
-$guest				=	'';
-$email				=	'';
-$customer_group		=	'';
-$guestname			=	'';
-$guestemail			=	'';
-$guestmobile		=	'';
-$remarks			=	'';
-
-$trip_model			=	'';		
-$no_of_passengers	=	'';
-$pickupcity			=	'';
-
-$pickuplandmark		=	'';
-$viacity			=	'';
-
-$vialandmark		=	'';
-$dropdownlocation	=	'';
-
-$dropdownlandmark	=	'';
-$pickupdatepicker	=	'';
-$dropdatepicker		=	'';
-$pickuptimepicker	=	'';
-$droptimepicker 	=	'';
-
-$vehicle_ac_type			=	'';
-
-$vehicle_model_id			=	'';
-$beacon_light				=	'';
-$beacon_light_radio	   	    =	'';
-$pluck_card 				=	'';
-$uniform 					=	'';
-$seating_capacity 			=	'';
-$available_driver 			=	'';
-$language 					=	'';
-$tariff 					=	'';
-$available_vehicle			=	'';
-
-$recurrent_yes 				=	'';
-$recurrent_continues 		=	'';
-$recurrent_alternatives 	=	'';
-$recurrent					=	'';
-
-$reccurent_continues_pickupdatepicker 	=	'';
-$reccurent_continues_pickuptimepicker 	=	'';
-$reccurent_continues_dropdatepicker 	=	'';
-$reccurent_continues_droptimepicker 	=	'';
-
-
-$reccurent_alternatives_pickupdatepicker	=	'';
-$reccurent_alternatives_pickuptimepicker	=	'';
-$reccurent_alternatives_dropdatepicker		=	'';
-$reccurent_alternatives_droptimepicker		=	'';
-
-$alternative_pickupdatepicker	= '';
-$alternative_pickuptimepicker	= '';
-$alternative_droptimepicker 	= '';
-$alternative_dropdatepicker	    = '';
-
-$customer_type					= -1;
-
-
-
-if($this->mysession->get('post')!=NULL || $information!=false){ 
-
-if($this->mysession->get('post')!=NULL){
-$data						=	$this->mysession->get('post'); 
-if(isset($data['trip_id'])){
-$trip_id = $data['trip_id'];
-}
-if(isset($data['guest_id'])){
-$guest_id=$data['guest_id'];
-}
-}else{ 
-$data =$information; 
-$trip_id = $data['trip_id'];
-if(isset($data['guest_id'])){
-$guest_id=$data['guest_id'];
-}
-}
-
-if($data['booking_source']!=-1){ 
-$booking_source				=	$data['booking_source'];
-}
-$source						=	$data['source'];
-$customer					=	$data['customer'];
-$new_customer				=	$data['new_customer'];
-$email						=	$data['email'];
-$mobile						=	$data['mobile'];
-$advanced					=	$data['advanced'];
-$advanced_vehicle				=	$data['advanced_vehicle'];
-$email						=	$data['email'];
-if($data['customer_group']!=-1){
-$customer_group				=	$data['customer_group'];
-}
-$guest						=	$data['guest'];
-$guestname					=	$data['guestname'];
-$guestemail					=	$data['guestemail'];
-$guestmobile				=	$data['guestmobile'];
-
-if($data['trip_model']!=-1){
-$trip_model					=	$data['trip_model'];
-}	
-$no_of_passengers			=	$data['no_of_passengers'];
-$pickupcity					=	$data['pickupcity'];
-$pickupcitylat				=	$data['pickupcitylat'];
-$pickupcitylng				=	$data['pickupcitylng'];
-
-$pickuplandmark				=	$data['pickuplandmark'];
-$viacity					=	$data['viacity'];
-$viacitylat					=	$data['viacitylat'];
-$viacitylng					=	$data['viacitylng'];
-
-$vialandmark				=	$data['vialandmark'];
-$dropdownlocation			=	$data['dropdownlocation'];
-$dropdownlocationlat		=	$data['dropdownlocationlat'];
-$dropdownlocationlng		=	$data['dropdownlocationlng'];
-
-$dropdownlandmark			=	$data['dropdownlandmark'];
-$pickupdatepicker			=	$data['pickupdatepicker'];
-$dropdatepicker				=	$data['dropdatepicker'];
-$pickuptimepicker			=	$data['pickuptimepicker'];
-$droptimepicker 			=	$data['droptimepicker'];
-$remarks					=	$data['remarks'];
-
-if($data['vehicle_ac_type']!=-1){
-$vehicle_ac_type			=	$data['vehicle_ac_type'];
-}
-
-if($data['vehicle_model']!=-1){
-$vehicle_model_id			=	$data['vehicle_model'];
-}
-
-$beacon_light				=	$data['beacon_light'];
-$beacon_light_radio	   	    =	$data['beacon_light_radio'];
-$pluck_card 				=	$data['pluck_card'];
-$uniform 					=	$data['uniform'];
-if($data['seating_capacity']!=-1){
-$seating_capacity 			=	$data['seating_capacity'];
-}
-if($data['available_driver']!=-1){
-$available_driver 			=	$data['available_driver'];
-}
-if($data['language']!=-1){
-$language 					=	$data['language'];
-}
-if($data['tariff']!=-1){
-$tariff 					=	$data['tariff'];
-}
-if($data['available_vehicle']!=-1){
-$available_vehicle			=	$data['available_vehicle'];
-}
-
-$recurrent_yes 				=	$data['recurrent_yes'];
-$recurrent_continues 		=	$data['recurrent_continues'];
-$recurrent_alternatives 	=	$data['recurrent_alternatives'];
-
-if($recurrent_yes==TRUE){
-if($recurrent_continues==TRUE){
-$reccurent_continues_pickupdatepicker 	=	$data['reccurent_continues_pickupdatepicker'];
-$reccurent_continues_pickuptimepicker 	=	$data['reccurent_continues_pickuptimepicker'];
-$reccurent_continues_dropdatepicker 	=	$data['reccurent_continues_dropdatepicker'];
-$reccurent_continues_droptimepicker 	=	$data['reccurent_continues_droptimepicker'];
-$recurrent								=	$data['recurrent'];
-}else if($recurrent_alternatives==TRUE){
-$reccurent_alternatives_pickupdatepicker	=	$data['reccurent_alternatives_pickupdatepicker'];
-$reccurent_alternatives_pickuptimepicker	=	$data['reccurent_alternatives_pickuptimepicker'];
-$reccurent_alternatives_dropdatepicker		=	$data['reccurent_alternatives_dropdatepicker'];
-$reccurent_alternatives_droptimepicker		=	$data['reccurent_alternatives_droptimepicker'];
-$recurrent									=	$data['recurrent'];
-}
-}
-
-$customer_type					= $data['customer_type'];
-
-$this->mysession->delete('post');
-}else{
-	$this->session->set_userdata('customer_id','');
-	$this->session->set_userdata('customer_name','');
-	$this->session->set_userdata('customer_email','');
-	$this->session->set_userdata('customer_mobile','');
-}
-if($customer_type==-1){
-$customer_type='';
-}
-$available_vehicles='';*/
 
 ?>
 
@@ -275,7 +80,11 @@ $available_vehicles='';*/
 								<div class="form-group">
 								<?php 
 								echo form_input(array('name'=>'customer','class'=>'form-control mandatory', 'id'=>'customer','placeholder'=>'Customer','value'=>$customer)).form_label('','name_error').$this->form_functions->form_error_session('customer', '<p class="text-red">', '</p>');
+
 								 ?>
+	
+		<ul class="autofill autofill-customer"></ul>
+				
 								<div class="hide-me"><?php echo form_input(array('name'=>'new_customer','class'=>'form-control new-customer','value'=>$new_customer)); ?></div>
 								</div>
 								<div class="form-group margin-top-less-10">
@@ -830,17 +639,31 @@ $available_vehicles='';*/
 				</div>
 				<div class="booking-source">
 					<fieldset class="body-border">
-					<legend class="body-head font-size-18-px">Remarks</legend>
-					<?php	$data = array(
-						  'name'        => 'remarks',
-						  'id'          => 'txt_area',
-						  'value'       => $remarks,
-						  'rows'        => '2',
-						  'cols'        => '10',
-						  'style'       => 'width:100%',
-						);
+					<legend class="body-head font-size-18-px">Other Information</legend>
 
-  					echo form_textarea($data);?>
+					<div class="form-group">
+						<?php	$data = array(
+							  'name'        => 'remarks',
+							  'id'          => 'txt_area',
+							  'value'       => $remarks,
+							  'rows'        => '2',
+							  'cols'        => '10',
+							  'style'       => 'width:100%',
+							);
+						echo form_label('Remarks','remarks');
+	  					echo form_textarea($data);?>
+					</div>
+
+					<div class="form-group width-40-percent">
+						<?php	$data = array(
+							  'name'        => 'advance_amount',
+							  'id'          => 'advance_amount',
+							  'value'       => $advance_amount,
+							  'class'=>'form-control'
+							);
+						echo form_label('Advance Amount','advance_amount');
+	  					echo form_input($data);?>
+					</div>
 					</fieldset>
 				</div>
 
@@ -876,8 +699,11 @@ $available_vehicles='';*/
 								echo form_input(array('name'=>'guest_id','value'=>$guest_id));
 							?>
 								</div>
+				
 				</div>
 			
+			</div>
+			<div class="row-source-full-100-percent-width-with-margin-8">
 			</div>
 		</fieldset>
 		 <?php echo form_close(); ?>
