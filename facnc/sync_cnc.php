@@ -110,6 +110,10 @@
 		meta_forward('sales/customer_payments.php','CustomerPayment='.$_GET['CustomerPayment']);
 		
 	}
+	elseif(isset($_GET['CustomerTripAdvance'])){
+		meta_forward('sales/customer_payments.php','CustomerTripAdvance='.$_GET['CustomerTripAdvance']);
+		
+	}
 	elseif(isset($_GET['CustomerPaymentInquiry'])){
 		meta_forward('sales/inquiry/customer_inquiry.php','CustomerPaymentInquiry='.$_GET['CustomerPaymentInquiry']);
 		

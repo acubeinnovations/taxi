@@ -669,7 +669,7 @@ $(document).ready(function(){
 					data['vehiclehrpaymentpercentage']='NO_VALUE';
 	
 			 }
-		}else{alert("vehicle false");
+		}else{
 			vehiclepaymentamount= 0;
 			vehiclepaymentpercentage=0;
 			totalvehicletripamount=0;
