@@ -693,6 +693,10 @@ echo form_close();?></td>
 						?>
 					</div>
 
+					<!--trip expenses start----- (add content by ajax)-->
+					<div id="expense-div"></div>
+					<!--trip expenses ends here-->
+
 					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
 						<?php echo form_label('Total Amount','totalamount'); ?>
 						<?php echo form_input(array('name'=>'totalamount','class'=>'form-control totalamount padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Total Amount','readonly'=>'true','amount-class-to-be-selected'=>'')); ?>
@@ -707,15 +711,16 @@ echo form_close();?></td>
 						echo form_input(array('name'=>'select_text','id'=>'totaltax','class'=>'form-control padding-2px-0-0-10-px voucher-text-box','style'=>'display:none','trigger'=>'true'));?>	
 
 					</div>
+
+					<div class=" form-group div-with-20-percent-width-with-margin-0-10">
+						<?php echo form_label('Advance Amount','advamount'); ?>
+						<?php echo form_input(array('name'=>'advamount','class'=>'form-control advamount padding-2px-0-0-10-px voucher-text-box','placeholder'=>'Advance Amount','readonly'=>'true','amount-class-to-be-selected'=>'')); ?>
+				
+					</div>
+					
 					
 
 				</div>
-
-				<!--trip expenses start----- (add content by ajax)-->
-				<div class="row-100-percent-width-margin-0-8" id="expense-div">
-				
-				</div>
-				<!--trip expenses ends here-->
 
 			</fieldset>
 

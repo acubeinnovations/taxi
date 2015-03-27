@@ -109,6 +109,7 @@ $(document).ready(function(){
 				var description		= data['trip'].remarks;
 				var ownership		= data['trip'].vehicle_ownership_types_id;
 				var driver_status_id 	= data['trip'].driver_status_id;
+				var advance_amount 	= data['trip'].advance_amount;
 				if(vehicle_ac_type_id==-1){
 					vehicle_ac_type_id=1;
 				}
@@ -123,6 +124,9 @@ $(document).ready(function(){
 				$('.trip-voucher-save').attr('trip_id',trip_id);
 				$('.trip-voucher-save').attr('driver_id',driver_id);
 				$('.trip-voucher-save').attr('new_voucher',new_voucher);
+
+				$('input[name="advamount"]').val(advance_amount);
+				
 
 				if(new_voucher==0){
 
