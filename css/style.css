@@ -584,6 +584,32 @@ display:none;
     background: #ccc;
 	opacity:.7;
 }
+.autofill{
+	color: #F4543C;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	position: absolute; 
+	background:#fff;
+	width:300px;
+	margin-top:-30px;
+	
+}
+
+.autofill li{
+	cursor: default;
+	padding: 0px 4px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 30px;
+	text-align: left;
+	border-top: 1px solid #E6E6E6;
+	
+}
+.autofill li a{
+	font-size: 14px;
+}
+
 
 .modal-body{
  z-index: 1030;

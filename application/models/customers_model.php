@@ -85,6 +85,23 @@ class Customers_model extends CI_Model {
 	}
 	}*/
 	
+	//get customers array by term matching with name
+	public function getArrayByName($name=''){
+		
+		if($name == '')
+			return false;
+
+		$this->db->where('organisation_id',$this->organisation_id);
+		$this->db->like('name', $name, 'after'); 
+		$this->db->order_by('name');
+		$qry = $this->db->get('customers');
+		if($qry->num_rows() > 0){
+			return $qry->result_array();
+		}else{
+			return false;
+		}
+	}
+	
 	public function addGuest($data){  
 		$data['organisation_id']=$this->session->userdata('organisation_id');
 		$data['user_id']=$this->session->userdata('id');
