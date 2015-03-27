@@ -284,7 +284,7 @@ if($_POST['filterType'] == 1){
 	$sql = get_sql_for_trip_invoices();//echo $sql;exit;
 	$cols = array(
 	_("Invoice ID"),
-	_("Company"),
+	_("Customer"),//_("Company"),
 	_("Trip(s)") => array('fun'=>'trip_ids', 'ord'=>''),
 	_("Voucher(s)") => array('fun'=>'vouchers', 'ord'=>''), 
 	_("Trip Date") => array('fun'=>'trip_date','ord'=>''),

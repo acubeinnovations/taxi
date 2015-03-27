@@ -304,10 +304,10 @@ function get_sql_for_trip_invoices()
 {
 	$date_after = date2sql($_POST['TransAfterDate']);
     $date_to = date2sql($_POST['TransToDate']);
-
+	//IF(cg.name IS NULL,'CASH', debtor.name) AS company
   	$sql = "SELECT 
 		trans.trans_no, 
-		IF(cg.name IS NULL,'CASH', debtor.name) AS company,
+		debtor.name customer,
 		trip.id,
 		voucher.id,
 		trip.pick_up_date,
