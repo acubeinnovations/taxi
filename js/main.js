@@ -2016,6 +2016,10 @@ $('.trips-booking-div #customer').keyup(function(){
 
 });
 
+$('.trips-booking-div #customer').focusout(function(){
+	$('.autofill-customer').css('display','none');//hide list
+});
+
 $('.drop-down-customers').live('click',function(e){
 
 	var name=$(this).attr('customer-name');
