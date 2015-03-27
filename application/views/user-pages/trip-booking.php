@@ -33,7 +33,9 @@
 	<div class="first-column-trip-booking">
 		<?php	
 		$attributes = array('autocomplete'=>'off','id'=>'trip-form');
-		 echo form_open(base_url().'trip-booking/book-trip',$attributes);?>
+		 echo form_open(base_url().'trip-booking/book-trip',$attributes);
+		 echo form_hidden('customer_id',gINVALID).br();
+		?>
 		<fieldset class="body-border">
 		<legend class="body-head ">Trip Booking</legend>
 			<div class="inner-first-column-trip-booking div-with-50-percent-width-with-margin-10">
@@ -64,9 +66,12 @@
 					<legend class="body-head font-size-18-px">Customer Information</legend>
 					<?php } ?>
 					<table>
+					
 					<?php if($booking_by == 'customer'){?>
 							<tr>
-							<td><?php echo form_hidden('mobile',$mobile).br();?>
+							<td>
+							<?php echo form_hidden('mobile',$mobile).br();
+							?>
 					<div class="hide-me"><?php echo form_input(array('name'=>'new_customer','class'=>'form-control new-customer','value'=>$new_customer)); ?></div>		
 							</td>
 							<td><?php echo form_hidden('email',$email);echo form_hidden('customer',$customer);echo form_hidden('new_customer',$new_customer).br();?></td>

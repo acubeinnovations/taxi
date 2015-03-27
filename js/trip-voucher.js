@@ -1710,7 +1710,8 @@ $(document).ready(function(){
 		 $.post(base_url+"/tarrif/tariffSelecter",
 			  {
 				vehicle_model:vehicle_model,
-				vehicle_ac_type:vehicle_ac_type
+				vehicle_ac_type:vehicle_ac_type,
+				customer_id:customer_id
 			  },function(data){
 				if(data!='false'){
 				data=jQuery.parseJSON(data);

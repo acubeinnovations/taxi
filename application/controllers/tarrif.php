@@ -319,21 +319,20 @@ class Tarrif extends CI_Controller {
 	}
 
 	public function tariffSelecter(){
-	if(isset($_REQUEST['vehicle_ac_type']) && isset($_REQUEST['vehicle_model'])){
+		if(isset($_REQUEST['vehicle_ac_type']) && isset($_REQUEST['vehicle_model'])){
+			$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
+			$data['vehicle_model']=$_REQUEST['vehicle_model'];
+			$data['customer_id'] = $_REQUEST['customer_id'];
+			$data['organisation_id']=$this->session->userdata('organisation_id');
 
-	
-	$data['vehicle_ac_type']=$_REQUEST['vehicle_ac_type'];
-	$data['vehicle_model']=$_REQUEST['vehicle_model'];
-	$data['organisation_id']=$this->session->userdata('organisation_id');
+			$res['data']=$this->tarrif_model->selectAvailableTariff($data);
+			if(count($res['data'])>0){
+				echo json_encode($res);
+			}else{
+				echo 'false';
+			}
 
-	$res['data']=$this->tarrif_model->selectAvailableTariff($data);
-	if(count($res['data'])>0){
-	echo json_encode($res);
-	}else{
-	echo 'false';
-	}
-
-	}	
+		}	
 	}
 
 	public function customertariff(){

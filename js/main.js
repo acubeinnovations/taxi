@@ -662,107 +662,83 @@ $('#reccurent_alternatives_droptimepicker'+count).datetimepicker({datepicker:fal
 $('.add-reccurent-dates').attr('count',Number(count)+1);
 });
 
-//for checking user in db
-$('#email,#mobile').on('keyup click',function(){
-var email=$('#email').val();
-var mobile=$('#mobile').val();
-	if(Trim(email)=="" && Trim(mobile)==""){
-		$('.add-customer').hide();
-	}
-    if(Trim(email)==""){
-        
-    }else{
-	    
-	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
-	    result = pattern.test(email);
-	    if( result== false) {
-	     email='';
-	    }
-	}
- 
-    if(Trim(mobile)==""){
-       
-    }else{
-   var regEx = /^(\+91|\+91|0)?\d{10}$/;
-   
-	if (!mobile.match(regEx)) {
- 		 mobile='';
-     }
-	}
-	if(Trim(mobile)!="" || Trim(email)!=""){
-	$.post(base_url+'/customers/customer-check',{
-	email:email,
-	mobile:mobile,
-	customer:'yes'
-	},function(data){
-	if(data!=false){
-		data=jQuery.parseJSON(data);
-		$('#customer').val(data[0].name);
-		$('#email').val(data[0].email);	
-		$('#mobile').val(data[0].mobile);
-		$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
-		$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
-		$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
-		$('#customer-group').val('');
-		$('.new-customer').attr('value',false);
-		if(data[0].customer_group_id>0){
-			
-			$('#customer-group').val(data[0].customer_group_id);
-			
-			}
-			
-		$('.clear-customer').show();
-		$('.add-customer').hide();
-      }else{
-		$('.clear-customer').hide();
-		$('.add-customer').show();
-	}
+	//for checking user in db
+	$('#email,#mobile').on('keyup click',function(){
+		var email=$('#email').val();
+		var mobile=$('#mobile').val();
+		if(Trim(email)=="" && Trim(mobile)==""){
+			$('.add-customer').hide();
+		}
+	   	 if(Trim(email)==""){
+		
+	    	}else{
+		    
+		    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+		    result = pattern.test(email);
+		    if( result== false) {
+		     email='';
+		    }
+		}
+	 
+	    	if(Trim(mobile)==""){
+	       
+	    	}else{
+	   		var regEx = /^(\+91|\+91|0)?\d{10}$/;
+	   
+			if (!mobile.match(regEx)) {
+	 		 	mobile='';
+	     		}
+		}
+		set_customer(email,mobile);
 	});
-	}
-	});
-//guest passengerchecking in db
+	//-----------------------------------
+
+
+	//guest passengerchecking in db
 
 	$('#guestemail,#guestmobile').on('keyup click',function(){
-var email=$('#guestemail').val();
-var mobile=$('#guestmobile').val();
+		var email=$('#guestemail').val();
+		var mobile=$('#guestmobile').val();
 	
-    if(Trim(email)==""){
-        
-    }else{
-	    
-	    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
-	    result = pattern.test(email);
-	    if( result== false) {
-	     email='';
-	    }
-	}
+		if(Trim(email)==""){
+
+		}else{
+		    
+		    pattern = /^[a-zA-Z0-9]\w+(\.)?\w+@\w+\.\w{2,5}(\.\w{2,5})?$/;
+		    result = pattern.test(email);
+		    if( result== false) {
+		     email='';
+		    }
+		}
  
-    if(Trim(mobile)==""){
-       
-    }else{
-	   var regEx = /^(\+91|\+91|0)?\d{10}$/;
-	   if (!mobile.match(regEx)) {
-	 		 mobile='';
-		 }
-	}
-	if(Trim(mobile)!="" || Trim(email)!=""){
-	$.post(base_url+'/customers/customer-check',{
-	email:email,
-	mobile:mobile,
-	customer:'no'
-	},function(data){
-	if(data!=false){
-		data=jQuery.parseJSON(data);
-		$('#guestname').val(data[0].name);
-		$('#guestemail').val(data[0].email);	
-		$('#guestmobile').val(data[0].mobile);
-		$('#guest_id').val(data[0].id);
-		$('.clear-guest').show();
-		
-      }
+		if(Trim(mobile)==""){
+
+		}else{
+		   var regEx = /^(\+91|\+91|0)?\d{10}$/;
+		   if (!mobile.match(regEx)) {
+		 		 mobile='';
+			 }
+		}
+		if(Trim(mobile)!="" || Trim(email)!=""){
+			$.post(base_url+'/customers/customer-check',{
+			email:email,
+			mobile:mobile,
+			customer:'no'
+			},function(data){
+				if(data!=false){
+					data=jQuery.parseJSON(data);
+					$('#guestname').val(data[0].name);
+					$('#guestemail').val(data[0].email);	
+					$('#guestmobile').val(data[0].mobile);
+					$('#guest_id').val(data[0].id);
+					$('.clear-guest').show();
+	
+		      		}
+			});
+		}
 	});
-	}
-	});
+	//----------------------------------------------
+
 	//clear customer information fields
 	$('.clear-customer').click(function(){
 		$('#customer').val('');
@@ -1415,10 +1391,13 @@ function generateAvailableVehicles(vehicle_type,vehicle_make,vehicle_model,vehic
 
 function generateTariffs(vehicle_model,vehicle_ac_type,tarif_id='',id){
 	var tarif_id=tarif_id;
-	 $.post(base_url+"/tarrif/tariffSelecter",
+	var customer_id = $('input[name="customer_id"]').val();
+	
+	$.post(base_url+"/tarrif/tariffSelecter",
 		  {
 			vehicle_model:vehicle_model,
-			vehicle_ac_type:vehicle_ac_type
+			vehicle_ac_type:vehicle_ac_type,
+			customer_id:customer_id
 		  },function(data){
 			if(data!='false'){
 			data=jQuery.parseJSON(data);
@@ -1925,51 +1904,90 @@ else{
 			//----ends function
 
 
-//show customer details on customer group change
-$('.company').on('change',function(){ 
-	var c_group_val=$('.company').val(); 
-	if(c_group_val!=-1){
-	$('#customer').css('display','none');
-	$.post(base_url+'/customers/CustomersById',{
-	c_group_val:c_group_val 
-	},function(data){
+	//show customer details on customer group change
+	$('.company').on('change',function(){ 
+		var c_group_val=$('.company').val(); 
+		if(c_group_val!=-1){
+		$('#customer').css('display','none');
+		$.post(base_url+'/customers/CustomersById',{
+		c_group_val:c_group_val 
+		},function(data){
 	
-	if(data!='false'){ 
-			data=jQuery.parseJSON(data);
-			 $('#customer-list').html("<option value='-1'>Select Customers </option>");
-			i=0;
-			for(var i=0;i<data.length;i++){ 
-			  $('#customer-list').append($("<option mobile="+data[i].mobile+"></option>").attr("value",data[i].id).text(data[i].name));
-			  
-			  $('#customer-list').css('display','block'); 
-			  
+		if(data!='false'){ 
+				data=jQuery.parseJSON(data);
+				 $('#customer-list').html("<option value='-1'>Select Customers </option>");
+				i=0;
+				for(var i=0;i<data.length;i++){ 
+				  $('#customer-list').append($("<option mobile="+data[i].mobile+"></option>").attr("value",data[i].id).text(data[i].name));
+				  
+				  $('#customer-list').css('display','block'); 
+				  
+				}
+			
+			}
+			else{
+			$('#customer-list').css('display','none');
 			}
 			
-		}
-		else{
-		$('#customer-list').css('display','none');
-		}
-			
+		});
+
+	}else{
+	$('#customer-list').css('display','none');	
+	}
+				//$('#mobile').val('');
+				//$('#email').val('');
+				//$('#customer').val('');	
 	});
 
-}else{
-$('#customer-list').css('display','none');	
+	//remove -1 during  new vehicle and driver entry
+	$('.driver-list').on('keydown',function(){
+	
+		$(".driver-list option[text='']").attr('selected', true);
+	});
+	$('.vehicle-list').on('keydown',function(){
+	
+		$(".vehicle-list option[text='']").attr('selected', true);
+	});
+
+
+
+///////////FUNCTIONS////////////////
+//set customer for trip booking
+function set_customer(email,mobile)
+{
+	if(Trim(mobile)!="" || Trim(email)!=""){
+		$.post(base_url+'/customers/customer-check',{
+			email:email,
+			mobile:mobile,
+			customer:'yes'
+		},function(data){
+			if(data!=false){
+				data=jQuery.parseJSON(data);
+				$('input[name="customer_id"]').val(data[0].id);
+				$('#customer').val(data[0].name)
+				$('#email').val(data[0].email);	
+				$('#mobile').val(data[0].mobile);
+				$(".passenger-basic-info > .form-group > label[for=name_error]").text('');
+				$(".passenger-basic-info > .form-group > label[for=email_error]").text('');
+				$(".passenger-basic-info > .form-group > label[for=mobile_error]").text('');
+				$('#customer-group').val('');
+				$('.new-customer').attr('value',false);
+				if(data[0].customer_group_id>0){
+	
+					$('#customer-group').val(data[0].customer_group_id);
+	
+					}
+	
+				$('.clear-customer').show();
+				$('.add-customer').hide();
+			}else{
+				$('.clear-customer').hide();
+				$('.add-customer').show();
+			}
+		});
+	}
 }
-			//$('#mobile').val('');
-			//$('#email').val('');
-			//$('#customer').val('');	
-});
 
-//remove -1 during  new vehicle and driver entry
-$('.driver-list').on('keydown',function(){
-	
-	$(".driver-list option[text='']").attr('selected', true);
 });
-$('.vehicle-list').on('keydown',function(){
-	
-	$(".vehicle-list option[text='']").attr('selected', true);
-});
-
- });
 
 

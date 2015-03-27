@@ -157,12 +157,21 @@ class Tarrif_model extends CI_Model {
 	}
 
 	public function selectAvailableTariff($data){
-	//$qry='SELECT T.rate,T.additional_kilometer_rate, max( T.to_date ) ,TM.minimum_kilometers,T.vehicle_model_id,TM.vehicle_make_id,TM.title, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
+		//$qry='SELECT T.rate,T.additional_kilometer_rate, max( T.to_date ) ,TM.minimum_kilometers,T.vehicle_model_id,TM.vehicle_make_id,TM.title, T.tariff_master_id, T.id FROM tariffs AS T, tariff_masters AS TM WHERE T.tariff_master_id = TM.id
 //AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND TM.organisation_id ='.$this->session->userdata('organisation_id').' AND  TM.vehicle_ac_type_id ='.$data['vehicle_ac_type'].' AND T.vehicle_model_id ='.$data['vehicle_model'].' AND T.to_date ="9999-12-30" GROUP BY T.tariff_master_id';
-	$qry='SELECT T.driver_bata,T.night_halt,T.rate,T.additional_kilometer_rate,T.additional_hour_rate, max( T.to_date ),TM.minimum_kilometers,TM.minimum_hours,T.vehicle_model_id,T.vehicle_ac_type_id,TM.title, T.tariff_master_id as tariff_master_id , T.id FROM tariffs AS T LEFT JOIN tariff_masters AS TM ON TM.id = T.tariff_master_id WHERE T.organisation_id ='.$this->session->userdata('organisation_id').' AND TM.organisation_id ='.$this->session->userdata('organisation_id').' AND  T.vehicle_ac_type_id ='.$data['vehicle_ac_type'].' AND T.vehicle_model_id ='.$data['vehicle_model'].' AND T.customer_id = '.gINVALID.' AND CURDATE() Between T.from_date and T.to_date GROUP BY T.tariff_master_id ';//echo $qry;exit;
-	$result=$this->db->query($qry);
-	$result=$result->result_array();
-	return $result;
+
+		
+		$qry='SELECT T.driver_bata,T.night_halt,T.rate,T.additional_kilometer_rate,T.additional_hour_rate, max( T.to_date ),TM.minimum_kilometers,TM.minimum_hours,T.vehicle_model_id,T.vehicle_ac_type_id,TM.title, T.tariff_master_id as tariff_master_id , T.id FROM tariffs AS T LEFT JOIN tariff_masters AS TM ON TM.id = T.tariff_master_id WHERE T.organisation_id ='.$this->session->userdata('organisation_id').' AND TM.organisation_id ='.$this->session->userdata('organisation_id').' AND  T.vehicle_ac_type_id ='.$data['vehicle_ac_type'].' AND T.vehicle_model_id ='.$data['vehicle_model'].' AND CURDATE() Between T.from_date and T.to_date';
+
+		if(isset($data['customer_id']) && is_numeric($data['customer_id']) &&  $data['customer_id'] > 0){
+			$qry .= ' AND T.customer_id IN ('.$this->db->escape($data['customer_id']).','.gINVALID.')';
+		}else{
+			$qry .= ' AND T.customer_id = '.gINVALID;
+		}
+		$qry .= ' GROUP BY T.tariff_master_id ';//echo $qry;exit;
+		$result=$this->db->query($qry);
+		$result=$result->result_array();
+		return $result;
 
 	}
 
