@@ -37,7 +37,7 @@ function get_delivery_no($src_id){
 
 function get_trip($voucher = 0)
 {
-	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,IFNULL(guest.name,customer.name) AS username";
+	$sql = "SELECT vehicle.registration_number as vehicle_no,trip.pick_up_date as trip_date,voucher.id as voucher_no,voucher.total_trip_amount as amount,voucher.voucher_no AS voucher_str,IFNULL(guest.name,customer.name) AS username,trip.advance_amount,trip.payment_no";
 	$sql .= " FROM trip_vouchers voucher";
 	$sql .= " LEFT JOIN trips trip ON trip.id = voucher.trip_id";
 	$sql .= " LEFT JOIN customers customer ON customer.id = trip.customer_id";
@@ -129,8 +129,9 @@ function print_invoices()
    			$result = get_customer_trans_details(ST_SALESINVOICE, $i);
 			$SubTotal = 0;
 			$slno = 1;
+			$advanceTotal = 0;
 
-
+		
 			while ($myrow2=db_fetch($result))
 			{
 				//$memo = get_comments_string(ST_SALESINVOICE, $myrow2['id']);
@@ -140,6 +141,12 @@ function print_invoices()
 	
 			
 				$trip = get_trip($myrow2['trip_voucher']);
+
+				$advPmtNo = @$trip['payment_no'];
+				if(is_numeric($advPmtNo) && $advPmtNo > 0){
+					$advanceTotal += @$trip['advance_amount'];
+				}
+
 				
 				$rep->TextCol(0, 1,  $slno);
 				$rep->TextCol(1, 2,  @$trip['voucher_str']);
@@ -187,16 +194,19 @@ function print_invoices()
 
 	    		}
 			$DisplayTax = number_format2($Tax, $dec);
+			$Total = $myrow["ov_freight"] + $myrow["ov_gst"] +
+				$myrow["ov_amount"]+$myrow["ov_freight_tax"];
+			$Balance = $Total - $advanceTotal;
+			
 
-			$DisplayTotal = number_format2($sign*($myrow["ov_freight"] + $myrow["ov_gst"] +
-				$myrow["ov_amount"]+$myrow["ov_freight_tax"]),$dec);
-			$advance = 0;
-			$DisplayAdvance = number_format2($advance,$dec);
-			$DisplayBalance = number_format2($myrow['Total']-$advance,$dec);
+			$DisplayTotal = number_format2($sign*($Total),$dec);
+			
+			$DisplayAdvance = number_format2($advanceTotal,$dec);
+			$DisplayBalance = number_format2($Balance,$dec);
 			
 
 			$rep->Font('bold');
-			$words = price_in_words_custom($myrow['Total']);
+			$words = price_in_words_custom($Balance);
 			$rep->row = $rep->words_row;	
 			$rep->NewLine();
 			$rep->Text($rep->words_column, "Rupees : ");
