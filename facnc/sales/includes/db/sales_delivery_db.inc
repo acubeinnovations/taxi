@@ -51,7 +51,7 @@ function update_delivery_with_cnc_voucher($delivery)
 			."WHERE id =".db_escape($line_items->id);
 
 		$total += $line_items->price;
-		$tax += $line_tax;
+		
 		$total_taxable_amount +=$line_items->unit_taxable_amount;
 
 		db_query($sql, 'failed to update line details');
