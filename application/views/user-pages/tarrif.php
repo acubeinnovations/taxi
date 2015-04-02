@@ -201,6 +201,13 @@ echo $this->form_functions->populate_dropdown($name,$customers,$customer_id,$cla
 			if (isset($result)){ echo $result;} else {?></div>
 <fieldset class="body-border ">
 <legend class="body-head">Manage Tariff</legend>
+<div class="float-right">
+	<?php echo form_open(  base_url().'organization/front-desk/tariff-view');
+		echo form_submit("view","View","class='btn btn-primary'");
+		echo form_close(); 
+	?>	
+</div>
+
 <?php echo br();?>
 <table>
 <tr>

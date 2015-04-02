@@ -108,6 +108,8 @@ class User extends CI_Controller {
 		}elseif($param1=='tarrif'&& ($param2== ''|| is_numeric($param2))){
 		$this->tarrif($param1,$param2);
 
+		}elseif($param1 == 'tariff-view'){
+			$this->view_tariff();
 		}
 		elseif($param1=='driver'){
 
@@ -396,6 +398,37 @@ class User extends CI_Controller {
 			$this->notAuthorized();
 		}
 	}
+
+
+	//---------------view tariff
+	public function view_tariff(){
+		if($this->session_check()==true) {
+
+			$tariffs = $this->tarrif_model->getTariffs();
+			$Tblocks = array();
+			if($tariffs){
+				foreach($tariffs as $tariff){
+					if(!array_key_exists($tariff['tariff_master_id'],$Tblocks)){
+						$Tblocks[$tariff['tariff_master_id']]['label'] = $tariff['tariff_master'];
+					}
+					$Tblocks[$tariff['tariff_master_id']]['values'][] = $tariff;		
+				}
+			}
+			
+			
+			//echo "<pre>";print_r($Tblocks);echo "</pre>";exit;
+			$data['tariffs'] = $Tblocks;
+			$data['title']="Tariff| ".PRODUCT_NAME; 
+			$page='user-pages/tariff-view';
+			$this->load_templates($page,$data);
+
+		}
+		else{
+			$this->notAuthorized();
+		}
+	}
+	//---------------------------------------
+
 
 	public function Device($param2){
 		if($this->session_check()==true) {

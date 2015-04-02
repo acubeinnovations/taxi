@@ -192,10 +192,35 @@ AND T.organisation_id ='.$this->session->userdata('organisation_id').' AND T.id 
 	return $result;
 
 	}
+
 	public function date_check($date){
-	if( strtotime($date) >= strtotime(date('Y-m-d')) ){
-	return true;
+		if( strtotime($date) >= strtotime(date('Y-m-d')) ){
+			return true;
+		}
 	}
+
+
+
+	public function getTariffs()
+	{
+		$filter = array('T.organisation_id' => $this->session->userdata('organisation_id'),
+			'T.customer_id' =>gINVALID
+			);
+		$this->db->select('T.tariff_master_id,T.vehicle_model_id,T.vehicle_ac_type_id,TM.title AS tariff_master,VM.name AS vehicle_model, VA.name AS vehicle_ac_type,T.rate,T.additional_kilometer_rate,T.additional_hour_rate,T.driver_bata,T.night_halt');
+		$this->db->from('tariffs T');
+		$this->db->join('tariff_masters TM','T.tariff_master_id = TM.id','left');
+		$this->db->join('vehicle_models VM','T.vehicle_model_id = VM.id','left');
+		$this->db->join('vehicle_ac_types VA','T.vehicle_ac_type_id = VA.id','left');
+		$this->db->where($filter);
+		$this->db->order_by('T.tariff_master_id,T.vehicle_model_id ASC,T.vehicle_ac_type_id');
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+		
 	}
-	}
-	?>
+
+}
+?>
