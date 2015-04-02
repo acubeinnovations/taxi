@@ -158,21 +158,21 @@ class Tarrif extends CI_Controller {
 	$data['driver_bata']=str_replace(",","",$this->input->post('driver_bata'));
 	$data['night_halt']= str_replace(",","",$this->input->post('night_halt'));
 	$data['organisation_id']=$this->session->userdata('organisation_id'); //print_r($data);exit;
-	 $data['user_id']=$this->session->userdata('id');
-	 $this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('vehicle_ac_type','Vehicle Ac type','trim|required|xss_clean|numeric');
-	 $this->form_validation->set_rules('fromdatepicker','Date ','trim|xss_clean');
-	 $this->form_validation->set_rules('rate','Rate','trim|required|xss_clean');
-	 $this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean');
-	 $this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean');
-	 $this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean');
-	 $this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean');
-	 $err=True;
-	if(!$this->date_check($data['from_date'])){
-	$err=False;
-	$this->session->set_userdata('Err_dt','Invalid Date for Tariff Add!');
-	}
+	$data['user_id']=$this->session->userdata('id');
+	$this->form_validation->set_rules('select_tariff','Tariff Master','trim|required|xss_clean|numeric');
+	$this->form_validation->set_rules('vehicle_model','Vehicle model','trim|required|xss_clean|numeric');
+	$this->form_validation->set_rules('vehicle_ac_type','Vehicle Ac type','trim|required|xss_clean|numeric');
+	$this->form_validation->set_rules('fromdatepicker','Date ','trim|xss_clean');
+	$this->form_validation->set_rules('rate','Rate','trim|required|xss_clean');
+	$this->form_validation->set_rules('additional_kilometer_rate','Kilometer Rate','trim|required|xss_clean');
+	$this->form_validation->set_rules('additional_hour_rate','Hour Rate','trim|required|xss_clean');
+	$this->form_validation->set_rules('driver_bata','Driver Bata','trim|required|xss_clean');
+	$this->form_validation->set_rules('night_halt','Night Halt','trim|required|xss_clean');
+	$err=True;
+	/*if(!$this->date_check($data['from_date'])){
+		$err=False;
+		$this->session->set_userdata('Err_dt','Invalid Date for Tariff Add!');
+	}*/
 	 if($data['tariff_master_id'] ==-1){
 	 $data['tariff_master_id'] ='';
 	 $err=False;
