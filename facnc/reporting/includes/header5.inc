@@ -47,8 +47,8 @@ $hline12 = $hline11 - 2 * $this->lineHeight;
 $hline13 = $hline12 - 4.5 * $this->lineHeight;
 $hline14 = $this->bottomMargin;
 
-$this->Line($hline1);
-$this->Line($hline2);
+//$this->Line($hline1);
+//$this->Line($hline2);
 $this->Line($hline3);
 $this->Line($hline4);
 $this->Line($hline5);
@@ -65,8 +65,8 @@ $this->Line1($hline12,0,$this->cols[2],$left);
 $this->Line($hline13);
 $this->Line($hline14);
 
-$this->LineTo($right, $hline1 ,$right, $hline14);
-$this->LineTo($left, $hline1 ,$left, $hline14);
+$this->LineTo($right, $hline3 ,$right, $hline14);
+$this->LineTo($left, $hline3 ,$left, $hline14);
 
 for ($i = 1; $i < count($this->headers); $i++)
 {
@@ -87,7 +87,7 @@ $this->LineTo($this->cols[2], $hline8 ,$this->cols[2], $hline13);
 //----------------------content filling---------------------------------
 
 $this->row = $hline2;
-$this->NewLine(2);
+$this->NewLine(5);
 $this->fontSize += 4;
 $this->Font('bold');
 $this->TextWrap($left, $this->row,$this->cols[6], $this->title,'center');
@@ -95,16 +95,15 @@ $this->fontSize -= 4;
 $this->Font();
 
 //customer address
-$this->NewLine();
+$this->NewLine(2);
 $this->TextWrap($this->cols[0], $this->row,$this->cols[1], _("To,"),'center');
 $this->NewLine();
 $this->TextWrap($this->cols[1], $this->row,$this->cols[6], $Addr1['name'],'left');
 $this->NewLine();
-$this->TextWrap($this->cols[1], $this->row,$this->cols[6], $Addr1['address'],'left');
+$this->TextWrapLines($this->cols[1], $this->cols[6], $Addr1['address'],'left');
 
 //header
-//$this->row = $hline2- 180;
-$this->NewLine(4);
+$this->row = $hline2- 185;
 $data_col = $this->cols[2]-140;
 $this->TextWrap($this->cols[1], $this->row,$this->cols[1], _("Invoice No."),'left');
 $this->TextWrap($data_col, $this->row,$this->cols[1],$this->formData['trans_no'],'left');
