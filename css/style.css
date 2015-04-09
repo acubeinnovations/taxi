@@ -756,3 +756,28 @@ font-size: 23px;
 color: #fff;
 font-weight:bold;
 }
+.continous-container{
+width:40%;
+}
+.scroll-container{
+width:80%;
+height:50px;
+overflow-y:auto;
+}
+.scroll{
+width:1000px;
+height:auto;
+}
+
+.scroll-item{
+width:100px;
+height:auto;
+float:left;
+margin-left:10px;
+
+}
+.search-print{
+width:20%;
+float: right;
+margin-top: -50px;
+}

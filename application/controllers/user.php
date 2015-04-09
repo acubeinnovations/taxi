@@ -971,8 +971,10 @@ class User extends CI_Controller {
 			$data['urlseg'] = 4;
 
 			$tdate = date('Y-m-d');
+			$data['trip_id'] 	= $where_arry['trip_id'] 		= '';
 			$data['trip_pick_date'] = $where_arry['trip_pick_date'] 	= '';
 			$data['trip_drop_date'] = $where_arry['trip_drop_date'] 	= '';
+			$data['nt_continous'] 	= $where_arry['nt_continous'] 		= '';
 			$data['vehicles'] 	= $where_arry['vehicle_id'] 		= '';
 			$data['cgroups'] 	= $where_arry['customer_group_id'] 	= '';
 			$data['drivers']	= $where_arry['driver_id'] 		= '';
@@ -981,9 +983,13 @@ class User extends CI_Controller {
 			
 			//submit search and set condition in session
 			
-			if(isset($_REQUEST['trip_search'])){
-				
+			if(isset($_REQUEST['trip_search'])){ 
+				$where_arry['trip_id']=$_REQUEST['trip_id'];
 				$where_arry['trip_pick_date']=$_REQUEST['trip_pick_date'];
+				if(isset($_REQUEST['nt_continous']))
+				$where_arry['nt_continous']=$_REQUEST['nt_continous'];  
+				else
+				$where_arry['nt_continous']='';
 				$where_arry['trip_drop_date']=$_REQUEST['trip_drop_date'];
 				$where_arry['vehicle_id']=$_REQUEST['vehicles'];
 				$where_arry['driver_id']=$_REQUEST['drivers'];
@@ -1001,8 +1007,9 @@ class User extends CI_Controller {
 				if(!isset($condition['trips'])){
 					$this->mysession->delete('condition');
 					//default conditions
-					
+					$condition['where']['trip_id']='';
 					$condition['where']['trip_pick_date']='';
+					$condition['where']['nt_continous']='';
 					$condition['where']['trip_drop_date']='';
 					$condition['where']['vehicle_id']='';
 					$condition['where']['driver_id']='';
@@ -1011,7 +1018,9 @@ class User extends CI_Controller {
 					$condition['like']['customer_name']='';
 					
 				}else{
+					$data['trip_id']=$condition['where']['trip_id'];
 					$data['trip_pick_date']=$condition['where']['trip_pick_date'];
+					$data['nt_continous']=$condition['where']['nt_continous'];
 					$data['trip_drop_date']=$condition['where']['trip_drop_date'];
 					$data['vehicle_id']=$condition['where']['vehicle_id'];
 					$data['driver_id']=$condition['where']['driver_id'];
