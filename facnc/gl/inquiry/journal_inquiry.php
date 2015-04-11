@@ -24,7 +24,23 @@ if ($use_popup_windows)
 if ($use_date_picker)
 	$js .= get_js_date_picker();
 
-page(_($help_context = "Journal Inquiry"), false, false, "", $js);
+if(isset($_REQUEST['inquiry_type']) && $_REQUEST['inquiry_type']=='journal'){
+$help_context=" Journal Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='payment'){
+$help_context=" Payment Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='receipt'){
+$help_context=" Receipt Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='bankAccount'){
+$help_context=" Bank Account Transfers Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='customer'){
+$help_context=" Customer Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='driver'){
+$help_context=" Driver Inquiry";
+}else if(isset($_REQUEST['inquiry_type'])&& $_REQUEST['inquiry_type']=='owner'){
+$help_context=" Vehicle Owner Inquiry";
+}
+
+page(_($help_context), false, false, "", $js);
 
 //-----------------------------------------------------------------------------------
 // Ajax updates

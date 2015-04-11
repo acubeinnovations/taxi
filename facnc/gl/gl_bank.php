@@ -404,6 +404,12 @@ if (isset($_POST['go']))
 
 start_form();
 
+$button_label='<button type="button" class="inputsubmit" style="height:25px; line-height:0.5; width:45px; margin-left:90%; margin-bottom:1%">List</button>';
+if (isset($_GET['NewPayment'])) {
+hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=payment");
+}else if(isset($_GET['NewDeposit'])) {
+hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=receipt");
+}
 display_bank_header($_SESSION['pay_items']);
 
 start_table(TABLESTYLE2, "width=100%", 10);

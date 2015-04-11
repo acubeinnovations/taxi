@@ -58,6 +58,9 @@ function gl_payment_controls()
 	$home_currency = get_company_currency();
 
 	start_form();
+	
+	$button_label='<button type="button" class="inputsubmit" style="height:25px; line-height:0.5; width:45px; margin-left:90%; margin-bottom:1%">List</button>';
+	hyperlink_params("$path_to_root/facnc/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=bankAccount");
 
 	start_outer_table(TABLESTYLE2,'width=100%');
 

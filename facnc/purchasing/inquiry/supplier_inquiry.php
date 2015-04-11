@@ -54,6 +54,14 @@ if (isset($_GET['ToDate'])){
 
 if (!@$_GET['popup'])
 	start_form();
+	
+	$button_label='<button type="button" class="inputsubmit" style="height:25px; line-height:0.5; width:45px; margin-left:90%;">List</button>';
+	if(isset($_GET['DriverTransactions'])){
+	hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=driver");
+	}else if(isset($_GET['OwnerTransactions'])){
+	hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=owner");
+	}
+	
 
 if (!isset($_POST['supplier_id']))
 	$_POST['supplier_id'] = get_global_supplier();

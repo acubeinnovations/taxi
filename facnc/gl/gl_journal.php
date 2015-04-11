@@ -33,9 +33,11 @@ if (isset($_GET['ModifyGL'])) {
 		$_GET['trans_no']);
 	$help_context = "Modifying Journal Entry";
 } else
-	$_SESSION['page_title'] = _($help_context = "Journal Entry");
+	$_SESSION['page_title'] = _($help_context = "Journal Entry" );
+	
 
 page($_SESSION['page_title'], false, false,'', $js);
+
 //--------------------------------------------------------------------------------------------------
 
 function line_start_focus() {
@@ -44,6 +46,7 @@ function line_start_focus() {
   $Ajax->activate('items_table');
   set_focus('_code_id_edit');
 }
+
 //-----------------------------------------------------------------------------------------------
 
 if (isset($_GET['AddedID'])) 
@@ -320,6 +323,9 @@ if (isset($_POST['go']))
 //-----------------------------------------------------------------------------------------------
 
 start_form();
+
+$button_label='<button type="button" class="inputsubmit" style="height:25px; line-height:0.5; width:45px; margin-left:90%; margin-bottom:1%">List</button>';
+hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=journal");
 
 display_order_header($_SESSION['journal_items']);
 

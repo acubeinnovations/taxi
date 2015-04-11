@@ -49,6 +49,9 @@ if (isset($_SESSION['cnc_customer'])){
 
 if (!@$_GET['popup'])
 	start_form();
+	
+	$button_label='<button type="button" class="inputsubmit" style="height:25px; line-height:0.5; width:45px; margin-left:90%;">List</button>';
+	hyperlink_params("$path_to_root/gl/inquiry/journal_inquiry.php", $button_label,"inquiry_type=customer");
 
 if (!isset($_POST['customer_id']))
 	$_POST['customer_id'] = get_global_customer();
