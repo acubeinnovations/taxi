@@ -48,7 +48,10 @@ class Trip_model extends CI_Model {
 				$qry.=' AND T.vehicle_id ="'.$where['vehicle_id'].'"';
 					
 			}
-
+			if($where['supplier_group_id'] > 0){
+				$qry.=' AND V.supplier_group_id ="'.$where['supplier_group_id'].'"';
+					
+			}
 		
 
 			if($where['trip_status_id'] > 0){

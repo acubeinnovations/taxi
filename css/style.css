@@ -761,8 +761,8 @@ width:40%;
 }
 .scroll-container{
 width:80%;
-height:50px;
-overflow-y:auto;
+height:75px;
+overflow-y:hidden;
 }
 .scroll{
 width:1000px;
@@ -779,5 +779,6 @@ margin-left:10px;
 .search-print{
 width:20%;
 float: right;
-margin-top: -50px;
+margin-top: -67px;
+padding-left:25px;
 }
