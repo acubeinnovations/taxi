@@ -175,7 +175,10 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 	$qry.=' AND V.vehicle_ownership_types_id ='.$_REQUEST['vehicle_ownership'];;
 	
 	}
+	if(isset($_REQUEST['supplier']) && $_REQUEST['supplier']>0){
+	$qry.=' AND V.supplier_group_id ='.$_REQUEST['supplier'];
 	
+	}
 	if(isset($_REQUEST['vehicle_model']) && $_REQUEST['vehicle_model']>0){
 	$qry.=' AND V.vehicle_model_id ='.$_REQUEST['vehicle_model'];
 	

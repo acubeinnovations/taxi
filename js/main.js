@@ -206,6 +206,7 @@ var reg_num=$('#reg_num').val();
 var vehicle_owner=$('#vehicle-owner').val();
 var vehicle_model=$('#vehicle-model').val();
 var vehicle_ownership=$('#vehicle-ownership').val();
+var supplier_group=$('#supplier').val();
 var status=$('#status').val();
 var url=base_url+'/organization/front-desk/download_xl/vehicle?';
 
@@ -227,6 +228,10 @@ url=url+'&vehicle_ownership='+vehicle_ownership;
 }
 if(status!='-1'){
 url=url+'&status='+status;
+
+}
+if(supplier_group!='-1'){
+url=url+'&supplier='+supplier_group;
 
 }
 window.open(url, '_blank');

@@ -54,6 +54,9 @@
 							  }
 						echo $this->form_functions->populate_dropdown('ownership',$vehicle_ownership_types,$ownership,$class,$id,$msg='Vehicle Ownership')?> </td>
 					    <td><?php $class="form-control";
+							  $id='supplier';
+						echo $this->form_functions->populate_dropdown('supplier',$supplier_groups,@$supplier,$class,$id,$msg="Supplier Group");?> </td>
+					    <td><?php $class="form-control";
 							  $id='status';
 							  $status[0]='Available';
 							  $status[1]='On-Trip';
@@ -66,8 +69,8 @@
 						echo $this->form_functions->populate_dropdown('status',$status,$status_id,$class,$id,$msg="Status");?> </td>
 						<td><?php echo form_submit("search","Search","class='btn btn-primary'");?></td>
 					    <?php echo form_close();?>
-						<td><?php echo nbs(55); ?></td>
-						<td><?php echo nbs(35); echo form_close(); ?></td>
+						
+						<td><?php echo form_close(); ?></td>
 						
 						<td><?php echo form_open( base_url().'organization/front-desk/vehicle');
 								  echo form_submit("add","Add","class='btn btn-primary'");
