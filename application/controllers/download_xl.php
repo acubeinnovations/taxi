@@ -291,6 +291,12 @@ FROM vehicles V where V.organisation_id = '.$this->session->userdata('organisati
 				
 					
 				}
+				if(isset($_REQUEST['trip_id']) && $_REQUEST['trip_id']!=gINVALID){
+					
+					$qry.=' AND T.id ="'.$_REQUEST['trip_id'].'"';
+				
+					
+				}
 				if(isset($_REQUEST['cgroups']) && $_REQUEST['cgroups']!=gINVALID){
 					
 					$qry.=' AND T.customer_group_id ="'.$_REQUEST['cgroups'].'"';
